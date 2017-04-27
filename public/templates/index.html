@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<head>
+    <title>SWAC Thermal Comfort App</title>
+
+</head>
+	
+<body class = "body">
+
+	<div id = "header">
+		<h1 style = "margin-left: 10px; color: white; display: inline-block;"> Roundhouse One + NAVFAC SWAC Thermal Comfort Model <span style = "font-size: 9px; float: bottom;"> Version: Beta </span> </h1>
+
+		<img style = "float: right; display: inline-block;" src = "http://www.roundhouseone.com/uploads/8/6/4/7/8647479/1447719287.png"/>
+	</div>
+
+	<br>
+	<form>
+		<div id = "variableSelection">
+			Location/Room: <br>
+			<p id = "test"></p>
+			<select id = "roomSelection" name = "roomSelection" class = "inputs" style = "margin-left: 10px; width: 300px;" >
+				<option value="B23-104B">Building 23 Room 104B</option>
+				<option value="B23-210B">Building 23 Room 210B</option>
+				<option value="B23-LC">Building 23 Room LC</option>
+			</select>
+			<br>
+			<br>
+
+			Water Temperature: <br>
+			<select id="waterSelection" name = "waterSelection" class = "inputs" style = "margin-left: 10px; width: 300px;" >
+				<option value="42">42</option> <option value="44">44</option> <option value="46">46</option>
+				<option value="48">48</option> <option value="50">50</option> <option value="52">52</option>
+			</select>
+
+
+
+
+			
+			<div class = "variableHeader"> 
+				<h3 class = "tooltip"> 
+					Thermal Comfort Variable Selection 
+					<span class = "tooltiptext"> “Thermal Comfort Variable Selection” section where users can toggle between the base and advance scenarios for each variable (except for Air Temperature and Relative Humidity because these values are measured so assumption values are not necessary) to get a more accurate estimate of thermal comfort. The advanced scenario is preferable to the base because the more frequent data is collected for a variable the more accurate of a thermal comfort reading users will receive. </span>
+				</h3>
+			</div>
+
+			Air Temperature: <br>
+			<input type = "radio" id = "tempSelection" name = "tempSelection" class = "inputs" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "tempSelection"> Measured </label>
+			<br>
+			<br>
+
+			Relative Humidity: <br>
+			<input type = "radio" id = "rhSelection" name = "rhSelection" class = "inputs" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "rhSelection"> Measured </label>
+			<br>
+			<br>
+
+			Mean Radiant Temperature: <br>
+			<input type = "radio" id = "mrtSelection1" name = "mrtSelection" class = "inputs" value = "Base" checked = "checked" style = "margin-left: 10px;" onclick = "mrtRadio()" />
+			<label for = "mrtSelection1"> Base </label>
+			<input type = "radio" id = "mrtSelection2" name = "mrtSelection" class = "inputs" value = "Advanced" style = "margin-left: 70px;" onclick = "mrtRadio()" />
+			<label for = "mrtSelection2" style = " color: #ef634a;"> Advanced </label>
+			<br>
+			<br>
+
+			Wind Speed: <br>
+			<input type = "radio" id = "windSelection1" name = "windSelection" class = "inputs" value = "Base" checked = "checked" style = "margin-left: 10px;" onclick = "windRadio()" />
+			<label for = "windSelection1"> Base </label>
+			<input type = "radio" id = "windSelection2" name = "windSelection" class = "inputs" value = "Advanced" style = "margin-left: 70px;" onclick = "windRadio()" />
+			<label for = "windSelection2" style = " color: #ef634a;"> Advanced </label>
+			<br>
+			<br>
+
+			Metabolic Rate: <br>
+			<input type = "radio" id = "metabolicSelection1" name = "metabolicSelection" class = "inputs" value = "Base" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "metabolicSelection1"> Base </label>
+			<input type = "radio" id = "metabolicSelection2" name = "metabolicSelection" class = "inputs" value = "Advanced" style = "margin-left: 70px;" />
+			<label for = "metabolicSelection2" style = " color: #ef634a;"> Advanced </label>
+			<br>
+			<br>
+
+			Clothing Insulation: <br>
+			<input type = "radio" id = "cloSelection1" name = "cloSelection" class = "inputs" value = "Base" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "cloSelection1"> Base </label>
+			<input type = "radio" id = "cloSelection2" name = "cloSelection" class = "inputs" value = "Advanced" style = "margin-left: 70px;" />
+			<label for = "cloSelection2" style = " color: #ef634a;"> Advanced </label>
+
+
+			<div class = "variableHeader"> 
+				<h3 class = "tooltip">
+					Thermal Comfort Strategies
+					<span class = "tooltiptext"> With an accurate thermal comfort readings users can now take advantage of the “Thermal Comfort Strategies” which become available once their respective thermal comfort variables are moved to advance. Thermal Comfort Strategies have an affect on both thermal comfort and energy savings.</span>
+				</h3>
+			</div>
+			<img src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png" height = "25" width = "25" id = "windowLock"/> Windows: <br>
+			<input type = "radio" id = "windowSelection1" name = "windowSelection" class = "inputs" value = "Closed" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "windowSelection1"> Closed </label>
+			<input type = "radio" id = "windowSelection2" name = "windowSelection" class = "inputs" value = "Open" style = "margin-left: 52px;" />
+			<label for = "windowSelection2"> Open </label>
+			<br>
+			<br>
+
+			<img src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png" height = "25" width = "25" id = "ceilingLock"/> Ceiling Fans: <br>
+			<input type = "radio" id = "ceilingSelection1" name = "ceilingSelection" class = "inputs" value = "Off" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "ceilingSelection1"> Off </label>
+			<input type = "radio" id = "ceilingSelection2" name = "ceilingSelection" class = "inputs" value = "On" style = "margin-left: 80px;" />
+			<label for = "ceilingSelection2"> On </label>
+			<br>
+			<br>
+
+			<img src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png" height = "25" width = "25" id = "hvacLock"/> HVAC Controls: <br>
+			<input type = "radio" id = "hvacSelection1" name = "hvacSelection" class = "inputs" value = "No" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "hvacSelection1"> No </label>
+			<input type = "radio" id = "hvacSelection2" name = "hvacSelection" class = "inputs" value = "Yes" style = "margin-left: 85px;" />
+			<label for = "hvacSelection2"> Yes </label>
+			<br>
+			<br>
+
+			<img src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png" height = "25" width = "25" id = "roofLock"/> Cool Roofs: <br>
+			<input type = "radio" id = "roofSelection1" name = "roofSelection" class = "inputs" value = "No" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "roofSelection1"> No </label>
+			<input type = "radio" id = "roofSelection2" name = "roofSelection" class = "inputs" value = "Yes" style = "margin-left: 85px;" />
+			<label for = "roofSelection2"> Yes </label>
+			<br>
+			<br>
+
+			<img src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png" height = "25" width = "25" id = "motionLock"/> Motion Light Sensors: <br>
+			<input type = "radio" id = "motionSelection1" name = "motionSelection" class = "inputs" value = "No" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "motionSelection1"> No </label>
+			<input type = "radio" id = "motionSelection2" name = "motionSelection" class = "inputs" value = "Yes" style = "margin-left: 85px;" />
+			<label for = "motionSelection2"> Yes </label>
+			<br>
+			<br>
+
+			<img src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png" height = "25" width = "25" id = "setpointLock"/> Enchanced Set Points: <br>
+			<input type = "radio" id = "setpointSelection1" name = "setpointSelection" class = "inputs" value = "No" checked = "checked" style = "margin-left: 10px;" />
+			<label for = "setpointSelection1"> No </label>
+			<input type = "radio" id = "setpointSelection2" name = "setpointSelection" class = "inputs" value = "Yes" style = "margin-left: 85px;" />
+			<label for = "setpointSelection2"> Yes </label>
+			<br>
+			<br>
+
+		<button type = "button" id = "runButton" onclick = "run(); updateData()"> RUN MODEL</button>
+
+		</div>
+	</form>
+
+	<div id = "pmvVisualization"> </div>
+
+	<div id = "metrics">
+		<table style = "margin-left: 0px; margin-bottom: 40px;">
+			<tr>
+				<td class = "labelRow"> Average Base PMV </td>
+				<td id = "avgBasePMV"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow" style = " color: #ef634a;"> Average Advanced PMV </td>
+				<td id = "avgAdvancedPMV"> N/A </td>
+			</tr>
+		</table>
+
+		<p style = "text-align: center;"> Thermal Quality Percentage of Time Matrix</p>
+
+		<table id = "Thermal Quality Percentage Table" style = "margin-bottom: 40px; margin-left: 0px;">
+			<tr>
+				<th class = "labelRow"> Thermal Quality (PMV) </th>
+				<th> Base </th>
+				<th style = " color: #ef634a;"> Advanced </th>
+				<th> Difference </th>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Too Hot (Greater Than .5 PMV) </td>
+				<td id = "perBaseHotPMV"> N/A </td>
+				<td id = "perAdvHotPMV"> N/A </td>
+				<td id = "perHotDiff"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Comfortable (Between -.5 and .5 PMV) </td>
+				<td id = "perBaseComfPMV"> N/A </td>
+				<td id = "perAdvComfPMV"> N/A </td>
+				<td id = "perComfDiff"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Too Cold (Less Than -.5 PMV) </td>
+				<td id = "perBaseColdPMV"> N/A </td>
+				<td id = "perAdvColdPMV"> N/A </td>
+				<td id = "perColdDiff"> N/A </td>
+			</tr>	
+		</table>
+
+		<p style = "text-align: center;"> Average Thermal Quality Matrix </p>
+
+		<table id = "Thermal Quality Average Table" style = "margin-bottom: 40px; margin-left: 0px;">
+			<tr>
+				<th class = "labelRow"> Average Thermal Quality (PMV) </th>
+				<th> Base </th>
+				<th style = " color: #ef634a;"> Advanced </th>
+				<th> Difference </th>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Too Hot (Greater Than .5 PMV) </td>
+				<td id = "avgBaseHotPMV"> N/A </td>
+				<td id = "avgAdvHotPMV"> N/A </td>
+				<td id = "avgHotDiff"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Comfortable (Between -.5 and .5 PMV) </td>
+				<td id = "avgBaseComfPMV"> N/A </td>
+				<td id = "avgAdvComfPMV"> N/A </td>
+				<td id = "avgComfDiff"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Too Cold (Less Than -.5 PMV) </td>
+				<td id = "avgBaseColdPMV"> N/A </td>
+				<td id = "avgAdvColdPMV"> N/A </td>
+				<td id = "avgColdDiff"> N/A </td>
+			</tr>	
+		</table>
+
+		<p style = "text-align: center;"> Energy Usage Matrix </p>
+
+		<table id = "Energy Use Table" style = "margin-bottom: 00px; margin-left: 0px;">
+			<tr>
+				<th class = "labelRow"> Total Energy Use (kWh) </th>
+				<th> Base </th>
+				<th style = " color: #ef634a;"> Advanced </th>
+				<th> Difference </th>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Too Hot (Greater Than .5 PMV) </td>
+				<td id = "baseHotKWH"> N/A </td>
+				<td id = "advHotKWH"> N/A </td>
+				<td id = "hotDiffKWH"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Comfortable (Between -.5 and .5 PMV) </td>
+				<td id = "baseComfKWH"> N/A </td>
+				<td id = "advComfKWH"> N/A </td>
+				<td id = "comfDiffKWH"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Too Cold (Less Than -.5 PMV) </td>
+				<td id = "baseColdKWH"> N/A </td>
+				<td id = "advColdKWH"> N/A </td>
+				<td id = "coldDiffKWH"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Total kWh </td>
+				<td id = "baseTotal"> N/A </td>
+				<td id = "advTotal"> N/A </td>
+				<td id = "diffTotal"> N/A </td>
+			</tr>
+			<tr>
+				<td class = "labelRow"> Total Energy Cost </td>
+				<td id = "baseCost"> N/A </td>
+				<td id = "advCost"> N/A </td>
+				<td id = "diffCost"> N/A </td>
+			</tr>
+		</table>
+
+		<div style = "background-color: #eafce8; border-color: #eafce8; margin-top: 20px; margin-bottom: 30px; text-align: center; padding: 2px;" id = "energySavings">
+			<p style = "font-size: 20px; color: #283d25";> Energy Usage: <span class = "metricSummary" id = "energyMetric"> 0.00 kWh </span></p> <br>
+			<p style = "font-size: 20px; color: #283d25; margin-top: 5px;";> Savings: <span class = "metricSummary" id = "savingsMetric"> $0.00 </span></p>
+		</div>
+
+		<p style = "text-align: center;"> Comfort Delivered per Unit of Energy Consumed </p>
+		<table id = "Thermal Quality by Energy Use" style = "margin-top: 0px; margin-left: 0px;">
+			<tr>
+				<th class = "labelRow"> PMV/kWh </th>
+				<th> Base </th>
+				<th style = " color: #ef634a;"> Advanced </th>
+				<th> Difference </th>
+			</tr>
+
+			<tr>
+				<td class = "labelRow"> Comfortable (Between -.5 and .5 PMV) </td>
+				<td id = "baseComfEnergyPMV"> N/A </td>
+				<td id = "advComfEnergyPMV"> N/A </td>
+				<td id = "comfDiff"> N/A </td>
+			</tr>
+
+		</table>
+
+
+	</div>
+
+
+
+
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='./script.js') }}"></script>
+</body>
+</html>

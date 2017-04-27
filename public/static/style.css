@@ -1,0 +1,195 @@
+body {
+    font-family: "Lucida Console" ;
+    color: #525252;
+    width: 2420px;
+    background-color: white;
+}
+
+#variableSelection {
+	width: 500px;
+	border-style: solid;
+	border-radius: 10px;
+	border-color: #d3d3d3;
+	border-width: 1px;
+	line-height: 190%;
+	display: inline-block;
+	vertical-align:top;
+	float: left;
+}
+
+.variableHeader{
+	border-radius: 8px; 
+	border-color: black;
+	background-color: #384c6b;
+	width: 450px;
+	margin:0 auto;
+}
+
+.inputs {
+	font-family: "Lucida Console";
+}
+
+#pmvVisualization {
+	width: 1100px;
+	height: 1400px;
+	/*border-style: solid;*/
+	border-color: #d3d3d3;
+	border-width: 1px;
+	display: inline-block;
+	vertical-align:top;
+	margin-left: 25px;
+}
+
+#header {
+	border-style: solid; 
+	border-color: #384c6b;
+	background-color: #384c6b;
+	border-radius: 15px;
+}
+
+#metrics {
+	/*border-style: solid;*/
+	border-color: #d3d3d3;
+	border-width: 1px;
+	display: inline-block;
+	vertical-align:top;
+	float: top;
+	height: 1400px;
+	width: 750px;
+	margin-left: 25px;
+}
+
+.metricSummary{
+	text-align: center;
+	/*margin-left: 720px;*/
+	font-size: 30px;
+	color: #283d25;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+table, th, td {
+    border: 1px;
+    border-style: solid;
+    border-color: #d3d3d3;
+    border-collapse: collapse;
+    width: 750px;
+    text-align: center;
+}
+
+th, td {
+	padding: 10px;
+}
+
+th {
+	background-color: #384c6b;
+	color: white;
+}
+
+.labelRow {
+	background-color: #446e93;
+	color: white;
+}
+
+
+
+h3 {
+	text-align: center;
+	color: white;
+}
+
+#runButton {
+	width: 450px;
+	height: 50px;
+	display: block;
+	margin: 0 auto;
+	border-radius: 8px;
+	background-color: #384c6b;
+	border: none;
+	color: white;
+	margin-bottom: 5px;
+	cursor: pointer;
+    transition-duration: .4s;
+}
+
+#runButton:hover {
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+path {
+	stroke: #000000;
+	stroke-width:2px;
+	fill: none;
+}
+
+#xAxis path {
+    fill: none;
+    stroke: #000000;
+    stroke-width: 0.2px;
+}
+
+g#xAxis text {
+    font-size: 12px;
+    font-family: "Lucida Console";
+}
+
+#yAxis path {
+    fill: none;
+    stroke: "#000000";
+    stroke-width: 0.2px;
+}
+
+g#yAxis text {
+    font-size: 12px;
+    font-family: "Lucida Console";
+}
+
+#yAxis line {
+	opacity: .15
+}
+
+#xAxis line {
+	opacity: .15
+}
+
+#pmvZone {
+	fill: #4D4D4D;
+    opacity: 0.08;
+}
+
+.tooltip {
+/*    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;*/
+    /*cursor: help;*/
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: #e8ebef;
+    font-size: 10px;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 2px 0;
+    
+
+    position: absolute;
+    z-index: 1;
+
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: .8;
+    width: 500px;
+}
+
+
+
+
+
+
