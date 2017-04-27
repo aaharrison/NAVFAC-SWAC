@@ -1,4 +1,4 @@
-# ![logo]("https://www.brandsoftheworld.com/sites/default/files/styles/logo-thumbnail/public/102010/untitled-1_196.png?itok=IM6KLgyc") NAVFAC-SWAC
+# NAVFAC-SWAC
 The purpose of this model is to:
     1) Demonstrate the potential energy and cost savings from collecting thermal comfort data
     2)  Display thermal comfort metrics of each HVAC water temperature to decide on which water temperature keeps the occupants of a given         space comfortable for the longest period of time.
