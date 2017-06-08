@@ -10,14 +10,121 @@ var ceiling = "Off";
 var hvac = "No";
 var roof = "No";
 var motion = "No";
-var setpoint = "No";
+var ac = "No";
 var room = "B23-104B";
+var setpoint = 0;
+
+// Add Water Temp to text in index.html page
+document.getElementsByClassName("water")[0].innerHTML = water + "°F"
+document.getElementsByClassName("water")[1].innerHTML = water + "°F"
+document.getElementsByClassName("water")[2].innerHTML = water + "°F"
+document.getElementsByClassName("water")[3].innerHTML = water + "°F"
+document.getElementsByClassName("water")[4].innerHTML = water + "°F"
+document.getElementsByClassName("water")[5].innerHTML = water + "°F"
+document.getElementsByClassName("water")[6].innerHTML = water + "°F"
+document.getElementsByClassName("water")[7].innerHTML = water + "°F"
+document.getElementsByClassName("water")[8].innerHTML = water + "°F"
+document.getElementsByClassName("water")[9].innerHTML = water + "°F"
+document.getElementsByClassName("water")[10].innerHTML = water + "°F"
+document.getElementsByClassName("water")[11].innerHTML = water + "°F"
+document.getElementsByClassName("water")[12].innerHTML = water + "°F"
+
+// Function to Close and Unfurl the Intro Text
+function introText() {
+	var x = document.getElementById("introText")
+	if (x.style.display === 'block') {
+		x.style.display = 'none'
+		document.getElementById("introArrow").src = "https://image.flaticon.com/icons/svg/24/24567.svg"
+	} else {
+		x.style.display = 'block'
+		document.getElementById("introArrow").src = "http://freevector.co/wp-content/uploads/2014/07/23714-arrow-pointing-up-inside-a-circle-outline1.png"
+	}
+}
+
+// Function to Close and Unfurl the Reference List
+function referenceText() {
+	var x = document.getElementById("referenceText")
+	if (x.style.display === 'block') {
+		x.style.display = 'none'
+		document.getElementById("referenceArrow").src = "https://image.flaticon.com/icons/svg/24/24567.svg"
+	} else {
+		x.style.display = 'block'
+		document.getElementById("referenceArrow").src = "http://freevector.co/wp-content/uploads/2014/07/23714-arrow-pointing-up-inside-a-circle-outline1.png"
+	}
+}
+
+// Function to Close and Unfurl the Percentage of Time Matrix Table in Metric Column
+function timeMatrix() {
+	var x = document.getElementById("Thermal Quality Percentage Table")
+	if (x.style.display === "block") {
+		x.style.display = "none"
+		document.getElementById("timeArrow").src = "https://image.flaticon.com/icons/svg/24/24567.svg"
+	} else {
+		x.style.display = "block"
+		document.getElementById("timeArrow").src = "http://freevector.co/wp-content/uploads/2014/07/23714-arrow-pointing-up-inside-a-circle-outline1.png"
+	}
+}
+
+// Function to Close and Unfurl the Comfort Delivered per Unit of Energy Table in Metric Column
+function energyPMVMatrix() {
+	var x = document.getElementById("Thermal Quality by Energy Use")
+	if (x.style.display === "block"){
+		x.style.display = "none"
+		document.getElementById("energyPMVArrow").src = "https://image.flaticon.com/icons/svg/24/24567.svg"
+	} else {
+		x.style.display = "block"
+		document.getElementById("energyPMVArrow").src = "http://freevector.co/wp-content/uploads/2014/07/23714-arrow-pointing-up-inside-a-circle-outline1.png"
+	}
+}
+
+// Function to Close and Unfurl the Energy Usage Table in Metric Column
+function energyMatrix() {
+	var x = document.getElementById("Energy Use Table")
+	if (x.style.display === "block") {
+		x.style.display = "none"
+		document.getElementById("energyArrow").src = "https://image.flaticon.com/icons/svg/24/24567.svg"
+	} else {
+		x.style.display = "block"
+		document.getElementById("energyArrow").src = "http://freevector.co/wp-content/uploads/2014/07/23714-arrow-pointing-up-inside-a-circle-outline1.png"
+	}
+}
+
+// Display Set Point Slider Value
+function sliderValue(x){
+	if (x > 0) {
+		document.getElementById("sliderValue").innerHTML = "+" + x 
+	} else {
+		document.getElementById("sliderValue").innerHTML = x 
+	}
+}
 
 
-// Function to run on click of Air Speed Radio Buttons / Enable and Disable the Energy Reduction Measures
+// Permissions for set point slider, only unlocked MRT is advanced and Passive Conditioning is No
+function sliderPermission() {
+	if (document.getElementById("mrtSelection1").checked == true){
+		document.getElementById("setpointLock").src = "http://www.freeiconspng.com/uploads/lock-icon-17.png"
+		document.getElementById("setpointSlider").disabled = true;
+		document.getElementById("setpointSlider").value = 0;
+		document.getElementById("sliderValue").innerHTML = 0;}
+	else if (document.getElementById("mrtSelection1").checked == false & document.getElementById("acSelection1").checked == true){
+		document.getElementById("setpointLock").src = "https://cdn1.iconfinder.com/data/icons/hawcons/32/698846-icon-119-lock-rounded-open-128.png"
+		document.getElementById("setpointSlider").disabled = false;}
+	else{
+		document.getElementById("setpointLock").src = "http://www.freeiconspng.com/uploads/lock-icon-17.png"
+		document.getElementById("setpointSlider").disabled = true;
+		document.getElementById("setpointSlider").value = 0;
+		document.getElementById("sliderValue").innerHTML = 0;}
+	}
+
+// Initialize the slider Permission function
+sliderPermission()
+
+// Function to run on click of Air Speed Radio Buttons / Enable and Disable the Thermal Comfort Strategies
 function windRadio(){
 	if (document.getElementById('windSelection1').checked) {
   	wind = document.getElementById('windSelection1').value;
+  	document.getElementById("windowSelection1").checked = true;
+  	document.getElementById("ceilingSelection1").checked = true;
 	}
 	else if (document.getElementById('windSelection2').checked){
 	wind = document.getElementById('windSelection2').value;
@@ -26,14 +133,14 @@ function windRadio(){
 	if (wind == "Base"){
 		document.getElementById("windowSelection2").disabled = true
 		document.getElementById("ceilingSelection2").disabled = true
-		document.getElementById("windowLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png"
-		document.getElementById("ceilingLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png"
+		document.getElementById("windowLock").src = "http://www.freeiconspng.com/uploads/lock-icon-17.png"
+		document.getElementById("ceilingLock").src = "http://www.freeiconspng.com/uploads/lock-icon-17.png"
 	}
 	else {
 		document.getElementById("windowSelection2").disabled = false
 		document.getElementById("ceilingSelection2").disabled = false
-		document.getElementById("windowLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock_open.png"
-		document.getElementById("ceilingLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock_open.png"
+		document.getElementById("windowLock").src = "https://cdn1.iconfinder.com/data/icons/hawcons/32/698846-icon-119-lock-rounded-open-128.png"
+		document.getElementById("ceilingLock").src = "https://cdn1.iconfinder.com/data/icons/hawcons/32/698846-icon-119-lock-rounded-open-128.png"
 	}
 
 }
@@ -42,30 +149,24 @@ function windRadio(){
 function mrtRadio(){
 	if (document.getElementById('mrtSelection1').checked) {
   	mrt = document.getElementById('mrtSelection1').value;
+  	document.getElementById("roofSelection1").checked = true;
+  	document.getElementById("acSelection1").checked = true;
 	}
 	else if (document.getElementById('mrtSelection2').checked){
 	mrt = document.getElementById('mrtSelection2').value;
 	}
 
 	if (mrt == "Base"){
-		document.getElementById("hvacSelection2").disabled = true
 		document.getElementById("roofSelection2").disabled = true
-		document.getElementById("motionSelection2").disabled = true
-		document.getElementById("setpointSelection2").disabled = true
-		document.getElementById("hvacLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png"
-		document.getElementById("roofLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png"
-		document.getElementById("motionLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png"
-		document.getElementById("setpointLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock.png"
+		document.getElementById("acSelection2").disabled = true
+		document.getElementById("roofLock").src = "http://www.freeiconspng.com/uploads/lock-icon-17.png"
+		document.getElementById("acLock").src = "http://www.freeiconspng.com/uploads/lock-icon-17.png"
 	}
 	else {
-		document.getElementById("hvacSelection2").disabled = false
 		document.getElementById("roofSelection2").disabled = false
-		document.getElementById("motionSelection2").disabled = false
-		document.getElementById("setpointSelection2").disabled = false
-		document.getElementById("hvacLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock_open.png"
-		document.getElementById("roofLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock_open.png"
-		document.getElementById("motionLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock_open.png"
-		document.getElementById("setpointLock").src = "http://mkthinkstrategy.info/wggtest/admin/ic_lock_open.png"
+		document.getElementById("acSelection2").disabled = false
+		document.getElementById("roofLock").src = "https://cdn1.iconfinder.com/data/icons/hawcons/32/698846-icon-119-lock-rounded-open-128.png"
+		document.getElementById("acLock").src = "https://cdn1.iconfinder.com/data/icons/hawcons/32/698846-icon-119-lock-rounded-open-128.png"
 	}
 }
 
@@ -73,15 +174,25 @@ function mrtRadio(){
 windRadio()
 mrtRadio()
 
-// Function to Assign Intial Metadata Values under plot
-var roomLabel;
-var typeLabel;
-var buildingLabel;
+// Function to assign metadata labels of the selected parameters for the analysis
+function labels() {
+	if (room == "B23-104B") {
+		roomLabel = "104B"; 
+		typeLabel = "Bedroom"; 
+		building = "Building 23"; 
+		buildingLabel = "23";
+	} else if (room == "B23-210B") { 
+		roomLabel = "210B"; 
+		typeLabel = "Bedroom"; 
+		building = "Building 23"; 
+		buildingLabel = "23" 
+	} else if (room == "B23-LC") { 
+		roomLabel = "LC"; 
+		typeLabel = "Common Room"; 
+		building = "Building 23"; 
+		buildingLabel = "23" 
+	}
 
-function labels(){
-	if (room == "B23-104B") {roomLabel = "104B"; typeLabel = "Bedroom"; building = "Building 23"; buildingLabel = "23"} 
-	else if (room == "B23-210B") {roomLabel = "210B"; typeLabel = "Bedroom"; building = "Building 23"; buildingLabel = "23"} 
-	else if (room == "B23-LC") {roomLabel = "LC"; typeLabel = "Common Room"; building = "Building 23"; buildingLabel = "23"}
 	water = document.getElementById("waterSelection").value
 }
 
@@ -147,13 +258,6 @@ function run(){
 	ceiling = document.getElementById('ceilingSelection2').value;
 	}
 
-	if (document.getElementById('hvacSelection1').checked) {
-  	hvac = document.getElementById('hvacSelection1').value;
-	}
-	else if (document.getElementById('hvacSelection2').checked){
-	hvac = document.getElementById('hvacSelection2').value;
-	}
-
 	if (document.getElementById('roofSelection1').checked) {
   	roof = document.getElementById('roofSelection1').value;
 	}
@@ -161,18 +265,11 @@ function run(){
 	roof = document.getElementById('roofSelection2').value;
 	}
 
-	if (document.getElementById('motionSelection1').checked) {
-  	motion = document.getElementById('motionSelection1').value;
+	if (document.getElementById('acSelection1').checked) {
+  	ac = document.getElementById('acSelection1').value;
 	}
-	else if (document.getElementById('motionSelection2').checked){
-	motion = document.getElementById('motionSelection2').value;
-	}
-
-	if (document.getElementById('setpointSelection1').checked) {
-  	setpoint = document.getElementById('setpointSelection1').value;
-	}
-	else if (document.getElementById('setpointSelection2').checked){
-	setpoint = document.getElementById('setpointSelection2').value;
+	else if (document.getElementById('acSelection2').checked){
+	ac = document.getElementById('acSelection2').value;
 	}
 
 };
@@ -181,9 +278,7 @@ function run(){
 
 var request = "/getData/?room=" + encodeURIComponent(room) + "&water_temp=" + encodeURIComponent(water) + "&mrt=" + encodeURIComponent(mrt) + "&wind=" + encodeURIComponent(wind) + 
 	"&met=" + encodeURIComponent(met) + "&clo=" + encodeURIComponent(clo) + "&window=" + encodeURIComponent(Window) + "&ceiling=" + encodeURIComponent(ceiling) + 
-	"&hvac=" + encodeURIComponent(hvac) + "&roof=" + encodeURIComponent(roof) + "&motion=" + encodeURIComponent(motion) + "&setpoint=" + encodeURIComponent(setpoint)
-
-
+	"&roof=" + encodeURIComponent(roof) + "&ac=" + encodeURIComponent(ac) + "&setpoint=" + encodeURIComponent(setpoint) + "&hvac=" + encodeURIComponent(hvac) + "&motion" + encodeURIComponent(motion)
 
 // Read in csv from rh1mod.py
 
@@ -194,11 +289,8 @@ d3.csv(request, function(error, data) {
 		d.clo_value= +d.clo_value
 		d.metabolic_rate= +d.metabolic_rate
 		d.mrt= +d.mrt
-		// d.building= +d.building//Because these are not numeric data types they are excluded
-		// d.date_time= +d.date_time//Because these are not numeric data types they are excluded
 		d.energy_cost= +d.energy_cost
 		d.kwh= +d.kwh
-		// d.location= +d.location//Because these are not numeric data types they are excluded
 		d.relative_humidity= +d.relative_humidity
 		d.sqft_percent= +d.sqft_percent
 		d.water_temperature= +d.water_temperature
@@ -209,11 +301,13 @@ d3.csv(request, function(error, data) {
     console.log(data[0]);
 
 
-// Extreme variables set for scales
+// Extreme variables set for scales of visualization and for metadata found in the input section
 
 var minDate = d3.min(data,function(d){return d.date_time});
+document.getElementById("startDate").innerHTML = d3.timeFormat("%B %d")(d3.timeParse("%Y-%m-%d %H:%M:%S")(minDate))
 
 var maxDate = d3.max(data,function(d){return d.date_time});
+document.getElementById("endDate").innerHTML = d3.timeFormat("%B %d")(d3.timeParse("%Y-%m-%d %H:%M:%S")(maxDate))
 
 // Creating the Scales, X Axis and Y Axis
 
@@ -228,30 +322,31 @@ yScale = d3.scaleLinear()
 var xAxis = d3.axisBottom()
 	.scale(xScale)
 	.ticks(5)
-	.tickSize(5)
+	.tickSize(1)
 	.tickSizeOuter(0)
 	.tickSizeInner(-height+35)
-	.tickPadding(5)
-	.tickFormat(d3.timeFormat("%m-%d"));
+	.tickPadding(15)
+	.tickFormat(d3.timeFormat("%m/%d"));
 
 var yAxis = d3.axisLeft()
 	.scale(yScale)
 	.ticks(5)
 	.tickSize(5)
 	.tickSizeInner(-width)
+	.tickPadding(20)
 	.tickFormat(d3.format('d'));
 
 // Add X axis to canvas
 var xAxis = canvas.append("g")
 	.call(xAxis)
-	.attr("transform", "translate(68,740)")
+	.attr("transform", "translate(71,740)")
 	.attr("id","xAxis");
 
 // Add X axis label to the canvas
 var xLabel = canvas.append("text")
 	.attr("x",width/2)
 	.attr("y",785)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",20)
 	.text("Date");
 
@@ -264,7 +359,7 @@ var yAxis = canvas.append("g")
 // Add Y axis labels to the canvas
 var yLabel = canvas.append("text")
 	.attr("transform", "translate(25,530) rotate(270)")
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",20)
 	.text("Thermal Comfort (PMV)");
 
@@ -276,22 +371,39 @@ var pmvZone = canvas.append("rect")
     .attr("width", width)
     .attr("height", 115);
 
+// Lightly Blue the area below comfort zone
+var coldZone = canvas.append("rect")
+	.attr("id", "coldZone")
+	.attr("x", 70)
+	.attr("y", 465)
+	.attr("width", width)
+	.attr("height", 275)
+
+// Lightly Blue the area below comfort zone
+var hotZone = canvas.append("rect")
+	.attr("id", "hotZone")
+	.attr("x", 70)
+	.attr("y", 75)
+	.attr("width", width)
+	.attr("height", 275)
+
 // Legend Values (Building, Location, Water Temperature, Location Type)
 var buildingLegend = canvas.append("text")
 	.attr("id", "buildingLegend")
 	.attr("fill", "grey")
 	.attr("x",70)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",15)
 	.text("Building: ");
 
+// Add the Building label to the canvas
 var buildingValue = canvas.append("text")
 	.attr("id", "buildingValue")
 	.attr("fill", "#42a7ff")
 	.attr("x",170)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",18)
 	.text(buildingLabel);
 
@@ -300,16 +412,17 @@ var locationLegend = canvas.append("text")
 	.attr("fill", "grey")
 	.attr("x",250)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",15)
 	.text("Sensor Location: ");
 
+// Add Location Label to the canvas
 var locationValue = canvas.append("text")
 	.attr("id", "locationValue")
 	.attr("fill", "#42a7ff")
 	.attr("x",415)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",18)
 	.text(roomLabel);
 
@@ -318,34 +431,36 @@ var tempLegend = canvas.append("text")
 	.attr("fill", "grey")
 	.attr("x",500)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",15)
 	.text("Water Temperature: ");
 
+// Add Water Temperature Label to canvas
 var tempValue = canvas.append("text")
 	.attr("id", "tempValue")
 	.attr("fill", "#42a7ff")
 	.attr("x",685)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",18)
-	.text(water);
+	.text(water + "°F");
 
 var typeLegend = canvas.append("text")
 	.attr("id", "typeLegend")
 	.attr("fill", "grey")
 	.attr("x",750)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",15)
 	.text("Space Type: ");
 
+// Add space type label to canvas2
 var typeValue = canvas.append("text")
 	.attr("id", "typeValue")
 	.attr("fill", "#42a7ff")
 	.attr("x",875)
 	.attr("y",830)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",18)
 	.text(typeLabel);
 
@@ -354,9 +469,27 @@ var baseLegend = canvas.append("text")
 	.attr("fill", "grey")
 	.attr("x",400)
 	.attr("y",40)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",18)
 	.text("Base: ");
+
+var hotLegend = canvas.append("text")
+	.attr("id", "hotLegend")
+	.attr("fill", "#af1a33")
+	.attr("x",width/2)
+	.attr("y",100)
+	.attr("font-family","Lucida Sans Unicode")
+	.attr("font-size",14)
+	.text("Too Hot");
+
+var coldLegend = canvas.append("text")
+	.attr("id", "coldLegend")
+	.attr("fill", "#2d64c4")
+	.attr("x",width/2)
+	.attr("y",725)
+	.attr("font-family","Lucida Sans Unicode")
+	.attr("font-size",14)
+	.text("Too Cold");
 
 // Legend Colors (Base/Advanced)
 
@@ -374,7 +507,7 @@ var advancedLegendLine = canvas.append("text")
 	.attr("fill", "grey")
 	.attr("x",535)
 	.attr("y",40)
-	.attr("font-family","Lucida Console")
+	.attr("font-family","Lucida Sans Unicode")
 	.attr("font-size",18)
 	.text("Advanced: ");
 
@@ -468,7 +601,7 @@ focus.append("text")
     .attr("dx", 12)
     .attr("dy", "6.5em");
 
-// Appending mouse over area                          
+// Appending mouse over plot area
 canvas.append("rect")                                     
     .attr("width", 928)                              
     .attr("height", 665)
@@ -487,9 +620,6 @@ function mousemove() {
         d1 = data[i],
         d0_DateTime = d0.date_time
         d1_DateTime = d1.date_time
-
-        console.log(d0_DateTime)
-    	console.log(PMV(d0.air_temperature, d0.relative_humidity, d0.mrt, d0.air_speed, d0.clo_value, d0.metabolic_rate))
 
         d = x0 - d3.timeParse("%Y-%m-%d %H:%M:%S")(d0_DateTime) > d3.timeParse("%Y-%m-%d %H:%M:%S")(d1_DateTime) - x0 ? d1 : d0;
 
@@ -552,20 +682,20 @@ var valueLine = d3.line()
 	.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));})
 	.y(function(d){return yScale(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate));});
 
-canvas.append("path")
+ canvas.append("path")
 	.attr("d", valueLine(data))
 	.attr("class", "line")
  	.style("stroke", "#000000")
 	.attr("transform","translate(70,75)")
-	.style("stroke-width", 4)
+	.style("stroke-width", 1.50)
 	.style("opacity", 0.70)
-	.style("shape-rendering", " geometricPrecision");
+	.style("shape-rendering", "geometricPrecision");
+
 
 // Base Model Percentage Metrics
 
 // Base Model Average PMV
 var avgBasePMV = d3.mean(data, function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate);}).toFixed(2)
-document.getElementById("avgBasePMV").innerHTML = avgBasePMV
 
 // Total Data Point Counts
 var totalCounts = data.filter(function(d) {return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) >= -3 & PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) <= 3;}).length
@@ -589,19 +719,15 @@ document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV 
 // Average PMV When PMV > .5 (Too Hot)
 var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) > .5;}), 
 	function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)})
-if (avgBaseHotPMV == null){avgBaseHotPMV = 0} else {avgBaseHotPMV}
-document.getElementById("avgBaseHotPMV").innerHTML = avgBaseHotPMV.toFixed(2)
 
+// Average PMV When PMV < -.5 (Too Cold)
 var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) < -.5;}), 
 	function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)})
-if (avgBaseColdPMV == null){avgBaseColdPMV = 0} else {avgBaseColdPMV}
-document.getElementById("avgBaseColdPMV").innerHTML = avgBaseColdPMV.toFixed(2)
 
+// Average PMV When PMV is between .5 and -.5 (Comfortable)
 var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) >= -.5 && 
 	PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) <= .5 ;}), 
 	function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)})
-if (avgBaseComfPMV == null){avgBaseComfPMV = 0} else {avgBaseComfPMV}
-document.getElementById("avgBaseComfPMV").innerHTML = avgBaseComfPMV.toFixed(2)
 
 
 // Base Model Total Energy Usage Metrics
@@ -632,16 +758,13 @@ document.getElementById("baseCost").innerHTML = "$" + baseCost.toFixed(2)
 
 var baseHotEnergyPMV = avgBaseHotPMV / baseHotKWH
 if (isNaN(baseHotEnergyPMV)) {baseHotEnergyPMV = 0} else {baseHotEnergyPMV}
-// document.getElementById("baseHotEnergyPMV").innerHTML = baseHotEnergyPMV.toFixed(5)
 
 var baseColdEnergyPMV = avgBaseColdPMV / baseColdKWH
 if (isNaN(baseColdEnergyPMV)) {baseColdEnergyPMV = 0} else {baseColdEnergyPMV}
-// document.getElementById("baseColdEnergyPMV").innerHTML = baseColdEnergyPMV.toFixed(5)
 
 var baseComfEnergyPMV = (perBaseComfPMV * 100) / baseTotal
 if (isNaN(baseComfEnergyPMV)) {baseComfEnergyPMV = 0} else {baseComfEnergyPMV}
 document.getElementById("baseComfEnergyPMV").innerHTML = baseComfEnergyPMV.toFixed(3)
-
 
 // Base Plot Function End
 })
@@ -652,9 +775,35 @@ document.getElementById("baseComfEnergyPMV").innerHTML = baseComfEnergyPMV.toFix
 // Updated Plot Function Start
 
 function updateData(){
+
+	// Change color of the start and end date
+	if (water != 42) {
+		document.getElementById("startDate").style.color = '#42a7ff'
+		document.getElementById("endDate").style.color = '#42a7ff'
+	} else {
+		document.getElementById("startDate").style.color = 'black'
+		document.getElementById("endDate").style.color = 'black'
+	}
+
+	// Add Water Temp HTML
+	document.getElementsByClassName("water")[0].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[1].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[2].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[3].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[4].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[5].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[6].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[7].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[8].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[9].innerHTML = water + "°F"
+	document.getElementsByClassName("water")[10].innerHTML = water + "°F"
+
+	// Slider for dynamic set point slider
+	setpoint = document.getElementById("sliderValue").innerHTML
+
 	var request = "/getData/?room=" + encodeURIComponent(room) + "&water_temp=" + encodeURIComponent(water) + "&mrt=" + encodeURIComponent(mrt) + "&wind=" + encodeURIComponent(wind) + 
-	"&met=" + encodeURIComponent(met) + "&clo=" + encodeURIComponent(clo) + "&window=" + encodeURIComponent(Window) + "&ceiling=" + encodeURIComponent(ceiling) + 
-	"&hvac=" + encodeURIComponent(hvac) + "&roof=" + encodeURIComponent(roof) + "&motion=" + encodeURIComponent(motion) + "&setpoint=" + encodeURIComponent(setpoint)
+	"&met=" + encodeURIComponent(met) + "&clo=" + encodeURIComponent(clo) + "&window=" + encodeURIComponent(Window) + "&ceiling=" + encodeURIComponent(ceiling) + "&roof=" + encodeURIComponent(roof) + 
+	"&ac=" + encodeURIComponent(ac) + "&setpoint=" + encodeURIComponent(setpoint) + "&hvac=" + encodeURIComponent(hvac) + "&motion" + encodeURIComponent(motion)
 
 	// Metadata labels
 	labels()
@@ -667,11 +816,8 @@ function updateData(){
 			d.clo_value= +d.clo_value
 			d.metabolic_rate= +d.metabolic_rate
 			d.mrt= +d.mrt
-			// d.building= +d.building//Because these are not numeric data types they are excluded
-			// d.date_time= +d.date_time//Because these are not numeric data types they are excluded
 			d.energy_cost= +d.energy_cost
 			d.kwh= +d.kwh
-			// d.location= +d.location//Because these are not numeric data types they are excluded
 			d.relative_humidity= +d.relative_humidity
 			d.sqft_percent= +d.sqft_percent
 			d.water_temperature= +d.water_temperature
@@ -686,8 +832,10 @@ function updateData(){
 
 	// Set x axis scale extremes
 	var minDate = d3.min(data,function(d){return d.date_time});
+	document.getElementById("startDate").innerHTML = d3.timeFormat("%B %d")(d3.timeParse("%Y-%m-%d %H:%M:%S")(minDate))
 	
 	var maxDate = d3.max(data,function(d){return d.date_time});
+	document.getElementById("endDate").innerHTML = d3.timeFormat("%B %d")(d3.timeParse("%Y-%m-%d %H:%M:%S")(maxDate))
 
 
 	// Create and Set Scales, X Axis and Y Axis
@@ -698,11 +846,13 @@ function updateData(){
 	var xAxis = d3.axisBottom()
 		.scale(xScale)
 		.ticks(5)
-		.tickFormat(d3.timeFormat("%m-%d"))
+		.tickPadding(15)
+		.tickFormat(d3.timeFormat("%m/%d"))
 
 	var yAxis = d3.axisLeft()
 		.scale(yScale)
 		.ticks(5)
+		.tickPadding(20)
 		.tickFormat(d3.format('d'));
 
 	// Apply x and y axis scales and PMV Function for base and advanced scenarios
@@ -711,13 +861,8 @@ function updateData(){
 		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
 		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85));})
 
-		// Base Model Percentage Metrics
-		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85);}).toFixed(2)
-		document.getElementById("avgBasePMV").innerHTML = avgBasePMV;
-
 		// Base Model Average PMV
 		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85);}).toFixed(2)
-		document.getElementById("avgBasePMV").innerHTML = avgBasePMV
 
 		// Total Data Point Counts
 		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -3 & PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= 3;}).length
@@ -735,26 +880,30 @@ function updateData(){
 		 PMV(d.air_temperature, d.relative_humidity, 77.17, 0.10, 0.71, 0.85) <= .5;}).length) / totalCounts
 		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
 
+		// 42° F Base Comparision
+		var perHot42 = 0
+		document.getElementById("perHot42").innerHTML = perHot42 + "%"
+
+		var perComf42 = 85
+		document.getElementById("perComf42").innerHTML = perComf42 + "%"
+
+		var perCold42 = 15
+		document.getElementById("perCold42").innerHTML = perCold42 + "%"
+
 		// Base Model Average PMV Metrics
 
 		// Average PMV When PMV > .5 (Too Hot)
 		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
-		if (avgBaseHotPMV == null){avgBaseHotPMV = 0} else {avgBaseHotPMV}
-		document.getElementById("avgBaseHotPMV").innerHTML = avgBaseHotPMV.toFixed(2)
-
+		
 		// Average PMV When PMV < -.5 (Too Cold)
 		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
-		if (avgBaseColdPMV == null){avgBaseColdPMV = 0} else {avgBaseColdPMV}
-		document.getElementById("avgBaseColdPMV").innerHTML = avgBaseColdPMV.toFixed(2)
 
 		// Average PMV When PMV is between -.5 and .5 (Comfortable)
 		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 && 
 			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= .5 ;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
-		if (avgBaseComfPMV == null){avgBaseComfPMV = 0} else {avgBaseComfPMV}
-		document.getElementById("avgBaseComfPMV").innerHTML = avgBaseComfPMV.toFixed(2)
 
 		// Update Base kWh Metrics
 
@@ -774,6 +923,22 @@ function updateData(){
 		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
 		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
 
+		// 42° F Base Comparision
+		var hotKWH42 = 0
+		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
+
+		var comfKWH42 = 1563.8
+		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
+
+		var coldKWH42 = 196.7
+		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
+
+		var diffTotal42 = 1760.5
+		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
+
+		var diffCost42 = 510.55
+		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
+
 		// Base Model PMV/kWh
 
 		var baseTotal = baseHotKWH + baseComfKWH + baseColdKWH
@@ -781,15 +946,16 @@ function updateData(){
 
 		var baseHotEnergyPMV = avgBaseHotPMV / baseHotKWH
 		if (isNaN(baseHotEnergyPMV)) {baseHotEnergyPMV = 0} else {baseHotEnergyPMV}
-		// document.getElementById("baseHotEnergyPMV").innerHTML = baseHotEnergyPMV.toFixed(5)
 
 		var baseColdEnergyPMV = avgBaseColdPMV / baseColdKWH
 		if (isNaN(baseColdEnergyPMV)) {baseColdEnergyPMV = 0} else {baseColdEnergyPMV}
-		// document.getElementById("baseColdEnergyPMV").innerHTML = baseColdEnergyPMV.toFixed(5)
 
 		var baseComfEnergyPMV = (perBaseComfPMV * 100) / baseTotal
 		if (isNaN(baseComfEnergyPMV)) {baseComfEnergyPMV = 0} else {baseComfEnergyPMV}
 		document.getElementById("baseComfEnergyPMV").innerHTML = baseComfEnergyPMV.toFixed(3)
+
+		// 42° F Base Comparision
+		document.getElementById("comfDiff42").innerHTML = "0.048"
 
 
 	} else if (room == "B23-210B") {
@@ -797,13 +963,8 @@ function updateData(){
 		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
 		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85));})
 
-		// Base Model Percentage Metrics
-		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85);}).toFixed(2)
-		document.getElementById("avgBasePMV").innerHTML = avgBasePMV;
-
 		// Base Model Average PMV
 		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85);}).toFixed(2)
-		document.getElementById("avgBasePMV").innerHTML = avgBasePMV
 
 		// Total Data Point Counts
 		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -3 & PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= 3;}).length
@@ -821,26 +982,30 @@ function updateData(){
 		 PMV(d.air_temperature, d.relative_humidity, 77.17, 0.10, 0.71, 0.85) <= .5;}).length) / totalCounts
 		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
 
+		// 42° F Base Comparision
+		var perHot42 = 0
+		document.getElementById("perHot42").innerHTML = perHot42 + "%"
+
+		var perComf42 = 85
+		document.getElementById("perComf42").innerHTML = perComf42 + "%"
+
+		var perCold42 = 15
+		document.getElementById("perCold42").innerHTML = perCold42 + "%"
+
 		// Base Model Average PMV Metrics
 
 		// Average PMV When PMV > .5 (Too Hot)
 		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
-		if (avgBaseHotPMV == null){avgBaseHotPMV = 0} else {avgBaseHotPMV}
-		document.getElementById("avgBaseHotPMV").innerHTML = avgBaseHotPMV.toFixed(2)
-
+		
 		// Average PMV When PMV < -.5 (Too Cold)
 		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
-		if (avgBaseColdPMV == null){avgBaseColdPMV = 0} else {avgBaseColdPMV}
-		document.getElementById("avgBaseColdPMV").innerHTML = avgBaseColdPMV.toFixed(2)
 
 		// Average PMV When PMV is between -.5 and .5 (Comfortable)
 		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 && 
 			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= .5 ;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
-		if (avgBaseComfPMV == null){avgBaseComfPMV = 0} else {avgBaseComfPMV}
-		document.getElementById("avgBaseComfPMV").innerHTML = avgBaseComfPMV.toFixed(2)
 
 		// Update Base kWh Metrics
 
@@ -860,6 +1025,23 @@ function updateData(){
 		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
 		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
 
+		// 42° F Base Comparision
+
+		var hotKWH42 = 0
+		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
+
+		var comfKWH42 = 1563.8
+		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
+
+		var coldKWH42 = 196.7
+		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
+
+		var diffTotal42 = 1760.5
+		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
+
+		var diffCost42 = 510.55
+		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
+
 		// Base Model PMV/kWh
 
 		var baseTotal = baseHotKWH + baseComfKWH + baseColdKWH
@@ -867,29 +1049,24 @@ function updateData(){
 
 		var baseHotEnergyPMV = avgBaseHotPMV / baseHotKWH
 		if (isNaN(baseHotEnergyPMV)) {baseHotEnergyPMV = 0} else {baseHotEnergyPMV}
-		// document.getElementById("baseHotEnergyPMV").innerHTML = baseHotEnergyPMV.toFixed(5)
 
 		var baseColdEnergyPMV = avgBaseColdPMV / baseColdKWH
 		if (isNaN(baseColdEnergyPMV)) {baseColdEnergyPMV = 0} else {baseColdEnergyPMV}
-		// document.getElementById("baseColdEnergyPMV").innerHTML = baseColdEnergyPMV.toFixed(5)
 
 		var baseComfEnergyPMV = (avgBaseComfPMV * 100) / baseTotal
 		if (isNaN(baseComfEnergyPMV)) {baseComfEnergyPMV = 0} else {baseComfEnergyPMV}
 		document.getElementById("baseComfEnergyPMV").innerHTML = baseComfEnergyPMV.toFixed(3)
 
+		// 42° F Base Comparision
+		document.getElementById("comfDiff42").innerHTML = "0.048"
 
 	} else if (room == "B23-LC"){
 		var baseValueLine = d3.line()
 		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
 		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36));})
 
-		// Base Model Percentage Metrics
-		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36);}).toFixed(2)
-		document.getElementById("avgBasePMV").innerHTML = avgBasePMV;
-
 		// Base Model Average PMV
 		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36);}).toFixed(2)
-		document.getElementById("avgBasePMV").innerHTML = avgBasePMV
 
 		// Total Data Point Counts
 		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) >= -3 & PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) <= 3;}).length
@@ -907,26 +1084,30 @@ function updateData(){
 		 PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) <= .5;}).length) / totalCounts
 		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
 
+		// 42° F Base Comparision
+		var perHot42 = 95
+		document.getElementById("perHot42").innerHTML = perHot42 + "%"
+
+		var perComf42 = 5
+		document.getElementById("perComf42").innerHTML = perComf42 + "%"
+
+		var perCold42 = 0
+		document.getElementById("perCold42").innerHTML = perCold42 + "%"
+
 		// Base Model Average PMV Metrics
 
 		// Average PMV When PMV > .5 (Too Hot)
 		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) > .5;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36)})
-		if (avgBaseHotPMV == null){avgBaseHotPMV = 0} else {avgBaseHotPMV}
-		document.getElementById("avgBaseHotPMV").innerHTML = avgBaseHotPMV.toFixed(2)
 
 		// Average PMV When PMV < -.5 (Too Cold)
 		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) < -.5;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36)})
-		if (avgBaseColdPMV == null){avgBaseColdPMV = 0} else {avgBaseColdPMV}
-		document.getElementById("avgBaseColdPMV").innerHTML = avgBaseColdPMV.toFixed(2)
+			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36)})		
 
 		// Average PMV When PMV is between -.5 and .5 (Comfortable)
 		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) >= -.5 && 
 			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) <= .5 ;}), 
 			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36)})
-		if (avgBaseComfPMV == null){avgBaseComfPMV = 0} else {avgBaseComfPMV}
-		document.getElementById("avgBaseComfPMV").innerHTML = avgBaseComfPMV.toFixed(2)
 
 		// Update Base kWh Metrics
 
@@ -946,6 +1127,30 @@ function updateData(){
 		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
 		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
 
+		// 42° F Base Comparision
+		document.getElementById("hotKWH42").innerHTML = "1703.2"
+		document.getElementById("comfKWH42").innerHTML = "57.3"
+		document.getElementById("coldKWH42").innerHTML = "0.0"
+		document.getElementById("diffTotal42").innerHTML = "1760.5"
+		document.getElementById("diffCost42").innerHTML = "$510.55"
+
+		// 42° F Base Comparision
+
+		var hotKWH42 = 1703.2
+		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
+
+		var comfKWH42 = 57.3
+		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
+
+		var coldKWH42 = 0.0
+		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
+
+		var diffTotal42 = 1760.5
+		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
+
+		var diffCost42 = 510.55
+		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
+
 		// Base Model PMV/kWh
 
 		var baseTotal = baseHotKWH + baseComfKWH + baseColdKWH
@@ -953,18 +1158,17 @@ function updateData(){
 
 		var baseHotEnergyPMV = avgBaseHotPMV / baseHotKWH
 		if (isNaN(baseHotEnergyPMV)) {baseHotEnergyPMV = 0} else {baseHotEnergyPMV}
-		// document.getElementById("baseHotEnergyPMV").innerHTML = baseHotEnergyPMV.toFixed(5)
 
 		var baseColdEnergyPMV = avgBaseColdPMV / baseColdKWH
 		if (isNaN(baseColdEnergyPMV)) {baseColdEnergyPMV = 0} else {baseColdEnergyPMV}
-		// document.getElementById("baseColdEnergyPMV").innerHTML = baseColdEnergyPMV.toFixed(5)
 
 		var baseComfEnergyPMV = (perBaseComfPMV * 100) / baseTotal
 		if (isNaN(baseComfEnergyPMV)) {baseComfEnergyPMV = 0} else {baseComfEnergyPMV}
 		document.getElementById("baseComfEnergyPMV").innerHTML = baseComfEnergyPMV.toFixed(3)
 
+		// 42° F Base Comparision
+		document.getElementById("comfDiff42").innerHTML = "0.003"
 	}
-
 
 	// Advanced Model Plot
 
@@ -977,7 +1181,6 @@ function updateData(){
 
 	// Advanced Model Average PMV
 	var avgAdvancedPMV = d3.mean(data, function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate);}).toFixed(2)
-	document.getElementById("avgAdvancedPMV").innerHTML = avgAdvancedPMV
 
 	// Total Data Point Counts
 	var totalCounts = data.filter(function(d) {return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) >= -3 & PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) <= 3;}).length
@@ -997,13 +1200,10 @@ function updateData(){
 
 	// Base vs Advanced Percentage Difference Metrics
 	var perHotDiff = Math.abs(perAdvHotPMV - perBaseHotPMV)
-	document.getElementById("perHotDiff").innerHTML = Math.round(perHotDiff * 100) + "%"
 
 	var perColdDiff = Math.abs(perAdvColdPMV - perBaseColdPMV)
-	document.getElementById("perColdDiff").innerHTML = Math.round(perColdDiff * 100) + "%"
 
 	var perComfDiff = Math.abs(perAdvComfPMV - perBaseComfPMV)
-	document.getElementById("perComfDiff").innerHTML = Math.round(perComfDiff * 100) + "%"
 
 	// Advanced Model Average PMV Metrics
 
@@ -1011,34 +1211,27 @@ function updateData(){
 	// Average PMV When PMV > .5 (Too Hot)
 	var avgAdvHotPMV = d3.mean(data.filter(function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) > .5;}), 
 		function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)})
-	if (avgAdvHotPMV == null){avgAdvHotPMV = 0} else {avgAdvHotPMV}
-	document.getElementById("avgAdvHotPMV").innerHTML = avgAdvHotPMV.toFixed(2)
 
 	// Average PMV When PMV < -.5 (Too Cold)
 	var avgAdvColdPMV = d3.mean(data.filter(function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) < -.5;}), 
 		function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)})
-	if (avgAdvColdPMV == null){avgAdvColdPMV = 0} else {avgAdvColdPMV}
-	document.getElementById("avgAdvColdPMV").innerHTML = avgAdvColdPMV.toFixed(2)
 
 	// Average PMV When PMV is between -.5 and .5 (Comfortable)
 	var avgAdvComfPMV = d3.mean(data.filter(function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) >= -.5 && 
 		PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate) <= .5 ;}), 
 		function(d){return PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)})
-	if (avgAdvComfPMV == null){avgAdvComfPMV = 0} else {avgAdvComfPMV}
-	document.getElementById("avgAdvComfPMV").innerHTML = avgAdvComfPMV.toFixed(2)
 
 	// Base vs Advanced PMV Avg Difference Metrics
+	var avgHotDiff
+	
 	var avgHotDiff = Math.abs(avgAdvHotPMV) - Math.abs(avgBaseHotPMV)
-	if (avgHotDiff == null){avgHotDiff = 0} else {avgHotDiff}
-	document.getElementById("avgHotDiff").innerHTML = avgHotDiff.toFixed(2)
+	if (avgHotDiff == null) {avgHotDiff = "N/A"} else {avgHotDiff}
 
 	var avgColdDiff = Math.abs(avgAdvColdPMV) - Math.abs(avgBaseColdPMV)
-	if (avgColdDiff == null){avgColdDiff = 0} else {avgColdDiff}
-	document.getElementById("avgColdDiff").innerHTML = avgColdDiff.toFixed(2)
+	if (avgColdDiff == null){avgColdDiff = "N/A"} else {avgColdDiff}
 
 	var avgComfDiff = Math.abs(avgAdvComfPMV) - Math.abs(avgBaseComfPMV)
-	if (avgComfDiff == null){avgComfDiff = 0} else {avgComfDiff}
-	document.getElementById("avgComfDiff").innerHTML = avgComfDiff.toFixed(2)
+	if (avgComfDiff == null){avgComfDiff = "N/A"} else {avgComfDiff}
 
 
 	// Update Advanced Energy Usage (kWh) Metrics
@@ -1062,23 +1255,20 @@ function updateData(){
 	// Base vs Advanced Energy Usage Differences
 
 	var hotDiffKWH = Math.abs(advHotKWH) - Math.abs(baseHotKWH)
-	document.getElementById("hotDiffKWH").innerHTML = hotDiffKWH.toFixed(1)
 
 	var coldDiffKWH = Math.abs(advColdKWH) - Math.abs(baseColdKWH)
-	document.getElementById("coldDiffKWH").innerHTML = coldDiffKWH.toFixed(1)
 
 	var comfDiffKWH = Math.abs(advComfKWH) - Math.abs(baseComfKWH)
-	document.getElementById("comfDiffKWH").innerHTML = comfDiffKWH.toFixed(1)
 
 	var baseTotal = baseHotKWH + baseComfKWH + baseColdKWH
-	document.getElementById("baseTotal").innerHTML = baseTotal.toFixed(1)
 
 	var advTotal = advHotKWH + advComfKWH + advColdKWH
 	document.getElementById("advTotal").innerHTML = advTotal.toFixed(1)
 
 	var diffTotal = hotDiffKWH + comfDiffKWH + coldDiffKWH
-	document.getElementById("diffTotal").innerHTML = diffTotal.toFixed(1)
 
+	var baseDiffTotal = advTotal - 1760.51
+	
 	// Energy Cost
 	var baseCost = baseTotal * .29
 	document.getElementById("baseCost").innerHTML = "$" + baseCost.toFixed(2) 
@@ -1087,32 +1277,137 @@ function updateData(){
 	document.getElementById("advCost").innerHTML = "$" + advCost.toFixed(2)
 
 	var diffCost = diffTotal * .29
-	document.getElementById("diffCost").innerHTML = "$" + diffCost.toFixed(2)
+
+	var baseDiffCost = advCost - 510.55
 
 	// Advanced Model PMV/kWh
 
 	var advHotEnergyPMV = avgAdvHotPMV / advHotKWH
 	if (isNaN(advHotEnergyPMV)) {advHotEnergyPMV = 0} else {advHotEnergyPMV}
-	// document.getElementById("advHotEnergyPMV").innerHTML = advHotEnergyPMV.toFixed(5)
 
 	var advColdEnergyPMV = avgAdvColdPMV / advColdKWH
 	if (isNaN(advColdEnergyPMV)) {advColdEnergyPMV = 0} else {advColdEnergyPMV}
-	// document.getElementById("advColdEnergyPMV").innerHTML = advColdEnergyPMV.toFixed(5)
 
 	var advComfEnergyPMV = (perAdvComfPMV * 100) / advTotal
-	if (isNaN(advComfEnergyPMV)) {advComfEnergyPMV = 0} else {advComfEnergyPMV}
+	if (isNaN(advComfEnergyPMV)) {
+		advComfEnergyPMV = 0
+	} else if (advComfEnergyPMV == Number.POSITIVE_INFINITY || advComfEnergyPMV == Number.NEGATIVE_INFINITY){
+		advComfEnergyPMV = 0
+	} else {
+		advComfEnergyPMV
+	}
+
 	document.getElementById("advComfEnergyPMV").innerHTML = advComfEnergyPMV.toFixed(3)
 
 	var comfDiff = baseComfEnergyPMV - advComfEnergyPMV
-	document.getElementById("comfDiff").innerHTML = comfDiff.toFixed(3)
 
 	// Metric Summary
-
 	var energyMetric = hotDiffKWH + comfDiffKWH + coldDiffKWH
-	document.getElementById("energyMetric").innerHTML = Math.abs(energyMetric).toFixed(2) + " kWh"
 
-	document.getElementById("savingsMetric").innerHTML = "$" + Math.abs(diffCost).toFixed(2)
+	if (ac == "No"){
+		var summary1TC = ((perBaseComfPMV - (perComf42 / 100)) / perBaseComfPMV) * 100
+	} else {
+		var summary1TC = ((perBaseComfPMV - (perComf42 / 100)) / perBaseComfPMV) * 100
+	}
 
+	if (summary1TC == Number.POSITIVE_INFINITY || summary1TC == Number.NEGATIVE_INFINITY) {
+		document.getElementById("summary1TC").innerHTML = "N/A"
+		document.getElementById("summary1TC").style.color = "#525252";
+	} else if (Math.round(summary1TC) > 0) {
+		document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
+		document.getElementById("summary1TC").style.color = "#24e016"
+	} else if (Math.round(summary1TC) < 0) {
+		document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
+		document.getElementById("summary1TC").style.color = "red"
+	} else if (Math.round(summary1TC) == 0) {
+		document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
+		document.getElementById("summary1TC").style.color = "#525252";
+	}
+
+	
+	var summary1Energy = ((baseTotal - diffTotal42) / baseTotal) * 100
+	if (Math.round(summary1Energy) > 0) {
+		document.getElementById("summary1Energy").innerHTML = Math.round(summary1Energy) + "%"
+		document.getElementById("summary1Energy").style.color = "red"
+	} else if (Math.round(summary1Energy) < 0) {
+		document.getElementById("summary1Energy").innerHTML = Math.round(summary1Energy) + "%"
+		document.getElementById("summary1Energy").style.color = "#24e016"
+	} else if (Math.round(summary1Energy) == 0){
+		document.getElementById("summary1Energy").innerHTML = Math.round(summary1Energy) + "%"
+		document.getElementById("summary1Energy").style.color = "#525252";
+	}
+	
+
+	//Update Summary Box
+	
+	if (Window == "Closed" && ceiling == "Off" && roof == "No" && ac == "No" && mrt == "Base" && wind == "Base" && met == "Base" && clo == "Base"){
+		document.getElementById("placeHolder").innerHTML = " "
+	} else if (Window == "Closed" && ceiling == "Off" && roof == "No" && ac == "No") {
+		document.getElementById("placeHolder").innerHTML = document.getElementById("summary2").innerHTML;
+
+		var summary2TC = ((perAdvComfPMV - perBaseComfPMV) / perAdvComfPMV) * 100
+		if (summary2TC > 0) {
+			document.getElementById("summary2TC").innerHTML = Math.round(summary2TC) + "%"
+			document.getElementById("summary2TC").style.color = "#24e016"
+		} else if (summary2TC < 0) {
+			document.getElementById("summary2TC").innerHTML = Math.round(summary2TC) + "%"
+			document.getElementById("summary2TC").style.color = "red"
+		} else if (summary2TC == 0) {
+			document.getElementById("summary2TC").innerHTML = Math.round(summary2TC) + "%"
+			document.getElementById("summary2TC").style.color = "#525252";
+		}
+		
+	} else {
+		document.getElementById("placeHolder").innerHTML = document.getElementById("summary3").innerHTML;
+
+		var summary3TC = ((perAdvComfPMV - perBaseComfPMV) / perAdvComfPMV) * 100
+		if (summary3TC == Number.POSITIVE_INFINITY || summary3TC == Number.NEGATIVE_INFINITY) {
+			document.getElementById("summary3TC").innerHTML = "N/A"
+			document.getElementById("summary3TC").style.color = "#525252";
+		}else if (summary3TC > 0) {
+			document.getElementById("summary3TC").innerHTML = Math.round(summary3TC) + "%"
+			document.getElementById("summary3TC").style.color = "#24e016"
+		} else if (summary3TC < 0) {
+			document.getElementById("summary3TC").innerHTML = Math.round(summary3TC) + "%"
+			document.getElementById("summary3TC").style.color = "red"
+		} else if (summary3TC == 0) {
+			document.getElementById("summary3TC").innerHTML = Math.round(summary3TC) + "%"
+			document.getElementById("summary3TC").style.color = "#525252";
+		}
+		
+		var summary3Energy = ((advTotal - baseTotal) / advTotal) * 100
+
+		if (summary3Energy < -99999) {
+			document.getElementById("summary3Energy").innerHTML = "No Energy Used"
+			document.getElementById("summary3Energy").style.color = "#24e016"
+		} else if (summary3Energy == Number.POSITIVE_INFINITY || summary3Energy == Number.NEGATIVE_INFINITY) {
+			document.getElementById("summary3Energy").innerHTML = "N/A"
+			document.getElementById("summary3Energy").style.color = "#525252"; 
+		} else if (summary3Energy > 0) {
+			document.getElementById("summary3Energy").innerHTML = Math.round(summary3Energy) + "%"
+			document.getElementById("summary3Energy").style.color = "red"
+		} else if (summary3Energy < 0) {
+			document.getElementById("summary3Energy").innerHTML = Math.round(summary3Energy) + "%"
+			document.getElementById("summary3Energy").style.color = "#24e016"
+		}
+
+		var summary3PMV = ((advComfEnergyPMV - baseComfEnergyPMV) / advComfEnergyPMV) * 100
+
+		if (summary3PMV == Number.POSITIVE_INFINITY || summary3PMV == Number.NEGATIVE_INFINITY) {
+			document.getElementById("summary3TC").innerHTML = "N/A"
+			document.getElementById("summary3TC").style.color = "#525252";
+		} else if (summary3PMV > 0) {
+			document.getElementById("summary3PMV").innerHTML = Math.round(summary3PMV) + "%"	
+			document.getElementById("summary3PMV").style.color = "#24e016"
+		} else if (summary3PMV < 0) {
+			document.getElementById("summary3PMV").innerHTML = Math.round(summary3PMV) + "%"
+			document.getElementById("summary3PMV").style.color = "red"
+		} else if (summary3PMV == 0){
+			document.getElementById("summary3PMV").innerHTML = Math.round(summary3PMV) + "%"
+			document.getElementById("summary3PMV").style.color = "#525252"
+		}
+		
+	}
 
 	//Mouse over
 
@@ -1137,7 +1432,7 @@ function updateData(){
 		.attr("class", "circleClass")
 		.attr("r", 10)
 		.style("fill", "none")
-		.style("stroke", "#ef634a");
+		.style("stroke", "#e55a2b");
 
 	// append the x line
 	focus.append("line")
@@ -1159,37 +1454,37 @@ function updateData(){
 
 	focus.append("text")
 	    .attr("class", "tempToolTip")
-	    .style("stroke", "#446e93")
+	    .style("stroke", "#e55a2b")
 	    .attr("dx", 12)
 	    .attr("dy", "-1.0em");
 
 	focus.append("text")
 	    .attr("class", "rhToolTip")
-	    .style("stroke", "#446e93")
+	    .style("stroke", "#e55a2b")
 	    .attr("dx", 12)
 	    .attr("dy", ".5em");
 
 	focus.append("text")
 	    .attr("class", "mrtToolTip")
-	    .style("stroke", "#446e93")
+	    .style("stroke", "#e55a2b")
 	    .attr("dx", 12)
 	    .attr("dy", "2.0em");
 
 	focus.append("text")
 	    .attr("class", "windToolTip")
-	    .style("stroke", "#446e93")
+	    .style("stroke", "#e55a2b")
 	    .attr("dx", 12)
 	    .attr("dy", "3.5em");
 
 	focus.append("text")
 	    .attr("class", "cloToolTip")
-	    .style("stroke", "#446e93")
+	    .style("stroke", "#e55a2b")
 	    .attr("dx", 12)
 	    .attr("dy", "5.0em");
 
 	focus.append("text")
 	    .attr("class", "metToolTip")
-	    .style("stroke", "#446e93")
+	    .style("stroke", "#e55a2b")
 	    .attr("dx", 12)
 	    .attr("dy", "6.5em");
 	                             
@@ -1206,24 +1501,34 @@ function updateData(){
 	// Plot Base data
 
 	canvas.append("path")
-	.attr("d", baseValueLine(data))
-	.attr("class", "baseLine")
- 	.style("stroke", "#000000")
-	.attr("transform","translate(70,75)")
-	.style("shape-rendering", "geometricPrecision");
+		.attr("d", baseValueLine(data))
+		.attr("class", "baseLine")
+	 	.style("stroke", "#000000")
+		.attr("transform","translate(70,75)")
+		.style("shape-rendering", "geometricPrecision");
+
 
 	// Plot Advanced Data
 	// Update
-	canvas.selectAll(".line")
+
+	trans = d3.transition()
+		.duration(1000)
+		.ease(d3.easeQuad);
+
+	datetrans = d3.transition()
+		.duration(1000)
+		.ease(d3.easeLinear)
+
+	canvas.selectAll(".line").transition(trans)
 		.attr("d", advancedValueLine(data))
 		.style("stroke", "#ef634a")
-		.style("stroke-width", 4)
+		.style("stroke-width", 1.50)
 		.style("opacity", 0.60);
 
 	canvas.selectAll(".baseLine")
 		.attr("d", baseValueLine(data))
 		.style("stroke", "#000000")
-		.style("stroke-width", 4)
+		.style("stroke-width", 1)
 		.style("opacity", 0.60);
 
 	canvas.selectAll("#buildingValue")
@@ -1233,7 +1538,7 @@ function updateData(){
 		.text(roomLabel);
 
 	canvas.selectAll("#tempValue")
-		.text(water);
+		.text(water + "°F");
 
 	canvas.selectAll("#typeValue")
 		.text(typeLabel);
@@ -1245,20 +1550,16 @@ function updateData(){
 		.tickSize(5)
 		.tickSizeOuter(0)
 		.tickSizeInner(-height+35)
-		.tickPadding(5)
-		.tickFormat(d3.timeFormat("%m-%d"));
+		.tickPadding(15)
+		.tickFormat(d3.timeFormat("%m/%d"));
 
-    canvas.selectAll("#xAxis")
-		.transition()
-		.duration(10)
+    canvas.selectAll("#xAxis").transition(datetrans)
 		.call(xAxis);
 
 	// Exit
-	canvas.selectAll("#xAxis").exit()
-		.transition()
-		.duration(10)
+	canvas.selectAll("#xAxis")
+		.exit()
 		.remove();
-
 
 	function mousemove() {                                 
     var x0 = xScale.invert(d3.mouse(this)[0]),              
@@ -1267,9 +1568,6 @@ function updateData(){
         d1 = data[i],
         d0_DateTime = d0.date_time
         d1_DateTime = d1.date_time
-
-        console.log(d0_DateTime)
-    	console.log(PMV(d0.air_temperature, d0.relative_humidity, d0.mrt, d0.air_speed, d0.clo_value, d0.metabolic_rate))
 
         d = x0 - d3.timeParse("%Y-%m-%d %H:%M:%S")(d0_DateTime) > d3.timeParse("%Y-%m-%d %H:%M:%S")(d1_DateTime) - x0 ? d1 : d0;
 
@@ -1327,12 +1625,9 @@ function updateData(){
 
 	}
 
-
-
 	//END
 	})
 };
-
 
 // PMV Function
 
@@ -1425,13 +1720,3 @@ function PMV(air_temperature, relative_humidity, meanRad, airSpeed, cloValue, me
 
 	return pmvHold
 }
-
-
-
-
-
-
-
-
-
-

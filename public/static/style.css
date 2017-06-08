@@ -1,38 +1,64 @@
 body {
-    font-family: "Lucida Console" ;
+    font-family: "Lucida Sans Unicode" ;
     color: #525252;
-    width: 2420px;
     background-color: white;
+}
+
+#holder {
+	display:inline block;
+	overflow:auto;
+	text-align: center;
+	height: 1700px;
 }
 
 #variableSelection {
 	width: 500px;
-	border-style: solid;
-	border-radius: 10px;
-	border-color: #d3d3d3;
-	border-width: 1px;
 	line-height: 190%;
 	display: inline-block;
-	vertical-align:top;
-	float: left;
+	text-align: left;
+}
+
+h1 {
+	margin-left: 10px;
+	color: white; 
+	display: inline-block;
+}
+
+#introText {
+	margin-left: 5px;
+}
+
+.columnHeader {
+	text-align: center;
+	font-size: 30px;
+}
+
+.dropDown {
+	cursor: pointer; 
+	width: 200px;
+}
+
+.arrowImage {
+	height: 25px; 
+	width: 25px; 
+	display: inline-block
 }
 
 .variableHeader{
 	border-radius: 8px; 
-	border-color: black;
 	background-color: #384c6b;
 	width: 450px;
 	margin:0 auto;
 }
 
-.inputs {
-	font-family: "Lucida Console";
+.radio {
+	width: 1.5em; 
+	height: 1.5em;
 }
 
 #pmvVisualization {
 	width: 1100px;
 	height: 1400px;
-	/*border-style: solid;*/
 	border-color: #d3d3d3;
 	border-width: 1px;
 	display: inline-block;
@@ -44,54 +70,66 @@ body {
 	border-style: solid; 
 	border-color: #384c6b;
 	background-color: #384c6b;
-	border-radius: 15px;
 }
 
 #metrics {
-	/*border-style: solid;*/
 	border-color: #d3d3d3;
 	border-width: 1px;
 	display: inline-block;
 	vertical-align:top;
 	float: top;
-	height: 1400px;
+	height: 1500px;
 	width: 750px;
 	margin-left: 25px;
 }
 
-.metricSummary{
-	text-align: center;
-	/*margin-left: 720px;*/
-	font-size: 30px;
-	color: #283d25;
-	margin-top: 10px;
-	margin-bottom: 10px;
+.metricHeader{
+	border-radius: 8px; 
+	background-color: #384c6b;
+	color: white;
+}
+
+.metricTableHeader {
+	font-size: 22px;
+	font-weight: 800;
+	display: inline-block;
+	vertical-align: 25%;
+}
+
+.summaryHeader {
+	text-align: left; 
+	margin-bottom: 0px;
+	font-size: 19px;
+	font-weight: 800;	
 }
 
 table, th, td {
     border: 1px;
-    border-style: solid;
+    border-style: none;
     border-color: #d3d3d3;
     border-collapse: collapse;
     width: 750px;
     text-align: center;
 }
 
-th, td {
+td, th {
 	padding: 10px;
+	border-style: none;
 }
 
-th {
-	background-color: #384c6b;
-	color: white;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-.labelRow {
-	background-color: #446e93;
-	color: white;
+.labelRow{
+	border-style: none;
+	font-weight: bold;
+	font-size: 18px;
 }
 
-
+.labelFont {
+	font-size: 13px;
+}
 
 h3 {
 	text-align: center;
@@ -104,9 +142,11 @@ h3 {
 	display: block;
 	margin: 0 auto;
 	border-radius: 8px;
-	background-color: #384c6b;
+	background-color: #446e93;
 	border: none;
 	color: white;
+	font-family: 'Lucida Sans Unicode';
+	font-size: 20px;
 	margin-bottom: 5px;
 	cursor: pointer;
     transition-duration: .4s;
@@ -130,18 +170,18 @@ path {
 
 g#xAxis text {
     font-size: 12px;
-    font-family: "Lucida Console";
+    font-family: "Lucida Sans Unicode";
 }
 
 #yAxis path {
     fill: none;
-    stroke: "#000000";
+    stroke: #000000;
     stroke-width: 0.2px;
 }
 
 g#yAxis text {
     font-size: 12px;
-    font-family: "Lucida Console";
+    font-family: "Lucida Sans Unicode";
 }
 
 #yAxis line {
@@ -155,6 +195,16 @@ g#yAxis text {
 #pmvZone {
 	fill: #4D4D4D;
     opacity: 0.08;
+}
+
+#coldZone {
+	fill: #7c94e8;
+	opacity: 0.08;
+}
+
+#hotZone {
+	fill: #e88d7d;
+	opacity: 0.08;
 }
 
 .tooltip {
@@ -179,17 +229,13 @@ g#yAxis text {
     z-index: 1;
 
     opacity: 0;
-    transition: opacity 2s;
+    transition: opacity .5s;
 }
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: .8;
     width: 500px;
+    cursor: pointer;
 }
-
-
-
-
-
 
