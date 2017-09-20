@@ -1,7 +1,12 @@
+![logo](http://www.public.navy.mil/subfor/cus/PublishingImages/past_sites/guampuc.jpg) 
+********
 # NAVFAC-SWAC
+
+swac.4Dapt.com
+
 The purpose of this model is to:
-    1) Demonstrate the potential energy and cost savings from collecting thermal comfort data
-    2)  Display thermal comfort metrics of each HVAC water temperature to decide on which water temperature keeps the occupants of a given         space comfortable for the longest period of time.
+  1. Demonstrate the potential energy and cost savings from collecting thermal comfort data
+  2. Display thermal comfort metrics of each HVAC water temperature to decide on which water temperature keeps the occupants of a given         space comfortable for the longest period of time.
 
 Users are able to create what-if scenarios based on the raw data and assumptions. First select a location (room or building) and a HVAC water temperature to get started. Next move on to the “Thermal Comfort Variable Selection” section where you can toggle between the base and advance scenarios for each variable (except for Air Temperature and Relative Humidity because these values are measured so assumption values are not necessary) to get a more accurate estimate of thermal comfort. 
 
@@ -12,7 +17,9 @@ On the right side of the page, users will find the “Metrics” section, which 
 Expected Outcomes:
 After using the model, users should be able to answer the following questions,
 
-"What are the benefits of moving to an advanced data collection scenario for a variable?"
-"What are the potential energy, cost savings and thermal comfort changes for applying thermal comfort strategies?"
-"What HVAC water temperature will keep the occupants comfortable for the logest period of time?"
+* "What are the benefits of moving to an advanced data collection scenario for a variable?"
+* "What are the potential energy, cost savings and thermal comfort changes for applying thermal comfort strategies?"
+* "What HVAC water temperature will keep the occupants comfortable for the logest period of time?"
 
+## Deployment Link
+https://dev.4dapt.com/e/admin/deploy/create/2ecc1862-da0a-4a2f-8cbc-00cbc8757d47/94d67a19-69b1-4e5d-9d0c-c698b089cc39

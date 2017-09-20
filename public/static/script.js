@@ -191,6 +191,16 @@ function labels() {
 		typeLabel = "Common Room"; 
 		building = "Building 23"; 
 		buildingLabel = "23" 
+	} else if (room == "B23-Hall1") {
+		roomLabel = "Hall 1";
+		typeLabel = "Hallway";
+		building = "Building 23";
+		buildingLabel = "23"
+	} else if (room == "B23-Hall2") {
+		roomLabel = "Hall 2";
+		typeLabel = "Hallway";
+		building = "Building 23";
+		buildingLabel = "23"
 	}
 
 	water = document.getElementById("waterSelection").value
@@ -201,13 +211,13 @@ labels()
 
 // Creating SVG Canvas for D3
 
-var height = 700
-var width = 1000
+var height = 350
+var width = 500
 
 var canvas = d3.select("#pmvVisualization")
  	.append("svg")
- 	.attr("height", 1000)
- 	.attr("width", 1000);
+ 	.attr("height", 550)
+ 	.attr("width", 650);
 
 // Function to dynamically assign variables for filtering, grab variable values from html and create javascript variables
 
@@ -292,7 +302,7 @@ d3.csv(request, function(error, data) {
 		d.energy_cost= +d.energy_cost
 		d.kwh= +d.kwh
 		d.relative_humidity= +d.relative_humidity
-		d.sqft_percent= +d.sqft_percent
+		// d.sqft_percent= +d.sqft_percent
 		d.water_temperature= +d.water_temperature
 		d.base_kwh= +d.base_kwh
 	})
@@ -325,29 +335,29 @@ var xAxis = d3.axisBottom()
 	.tickSize(1)
 	.tickSizeOuter(0)
 	.tickSizeInner(-height+35)
-	.tickPadding(15)
+	.tickPadding(10)
 	.tickFormat(d3.timeFormat("%m/%d"));
 
 var yAxis = d3.axisLeft()
 	.scale(yScale)
 	.ticks(5)
-	.tickSize(5)
-	.tickSizeInner(-width)
-	.tickPadding(20)
+	.tickSize(1)
+	.tickSizeInner(-width+80)
+	.tickPadding(10)
 	.tickFormat(d3.format('d'));
 
 // Add X axis to canvas
 var xAxis = canvas.append("g")
 	.call(xAxis)
-	.attr("transform", "translate(71,740)")
+	.attr("transform", "translate(71,390)")
 	.attr("id","xAxis");
 
 // Add X axis label to the canvas
 var xLabel = canvas.append("text")
-	.attr("x",width/2)
-	.attr("y",785)
+	.attr("x",width/2 + 15)
+	.attr("y",440)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",20)
+	.attr("font-size",10)
 	.text("Date");
 
 // Add Y axis to canvas
@@ -358,165 +368,165 @@ var yAxis = canvas.append("g")
 
 // Add Y axis labels to the canvas
 var yLabel = canvas.append("text")
-	.attr("transform", "translate(25,530) rotate(270)")
+	.attr("transform", "translate(25,290) rotate(270)")
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",20)
+	.attr("font-size",10)
 	.text("Thermal Comfort (PMV)");
 
 // Grey out PMV comfort Zone
 var pmvZone = canvas.append("rect")
     .attr("id", "pmvZone")
     .attr("x", 70)
-    .attr("y", 350)
-    .attr("width", width)
-    .attr("height", 115);
+    .attr("y", 205)
+    .attr("width", width - 80)
+    .attr("height", 57);
 
 // Lightly Blue the area below comfort zone
 var coldZone = canvas.append("rect")
 	.attr("id", "coldZone")
 	.attr("x", 70)
-	.attr("y", 465)
-	.attr("width", width)
-	.attr("height", 275)
+	.attr("y", 262)
+	.attr("width", width - 80)
+	.attr("height", 130)
 
-// Lightly Blue the area below comfort zone
+// Lightly Red the area below comfort zone
 var hotZone = canvas.append("rect")
 	.attr("id", "hotZone")
 	.attr("x", 70)
 	.attr("y", 75)
-	.attr("width", width)
-	.attr("height", 275)
+	.attr("width", width - 80)
+	.attr("height", 130)
 
 // Legend Values (Building, Location, Water Temperature, Location Type)
 var buildingLegend = canvas.append("text")
 	.attr("id", "buildingLegend")
 	.attr("fill", "grey")
 	.attr("x",70)
-	.attr("y",830)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",15)
+	.attr("font-size",9)
 	.text("Building: ");
 
 // Add the Building label to the canvas
 var buildingValue = canvas.append("text")
 	.attr("id", "buildingValue")
 	.attr("fill", "#42a7ff")
-	.attr("x",170)
-	.attr("y",830)
+	.attr("x",110)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",18)
+	.attr("font-size",10)
 	.text(buildingLabel);
 
 var locationLegend = canvas.append("text")
 	.attr("id", "locationLegend")
 	.attr("fill", "grey")
-	.attr("x",250)
-	.attr("y",830)
+	.attr("x",140)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",15)
+	.attr("font-size",9)
 	.text("Sensor Location: ");
 
 // Add Location Label to the canvas
 var locationValue = canvas.append("text")
 	.attr("id", "locationValue")
 	.attr("fill", "#42a7ff")
-	.attr("x",415)
-	.attr("y",830)
+	.attr("x",215)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",18)
+	.attr("font-size",10)
 	.text(roomLabel);
 
 var tempLegend = canvas.append("text")
 	.attr("id", "tempLegend")
 	.attr("fill", "grey")
-	.attr("x",500)
-	.attr("y",830)
+	.attr("x",250)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",15)
+	.attr("font-size",9)
 	.text("Water Temperature: ");
 
 // Add Water Temperature Label to canvas
 var tempValue = canvas.append("text")
 	.attr("id", "tempValue")
 	.attr("fill", "#42a7ff")
-	.attr("x",685)
-	.attr("y",830)
+	.attr("x", 340)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",18)
+	.attr("font-size",10)
 	.text(water + "°F");
 
 var typeLegend = canvas.append("text")
 	.attr("id", "typeLegend")
 	.attr("fill", "grey")
-	.attr("x",750)
-	.attr("y",830)
+	.attr("x",375)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",15)
+	.attr("font-size",9)
 	.text("Space Type: ");
 
-// Add space type label to canvas2
+// Add space type label to canvas
 var typeValue = canvas.append("text")
 	.attr("id", "typeValue")
 	.attr("fill", "#42a7ff")
-	.attr("x",875)
-	.attr("y",830)
+	.attr("x",430)
+	.attr("y",470)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",18)
+	.attr("font-size",10)
 	.text(typeLabel);
-
-var baseLegend = canvas.append("text")
-	.attr("id", "baseLegend")
-	.attr("fill", "grey")
-	.attr("x",400)
-	.attr("y",40)
-	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",18)
-	.text("Base: ");
 
 var hotLegend = canvas.append("text")
 	.attr("id", "hotLegend")
 	.attr("fill", "#af1a33")
-	.attr("x",width/2)
-	.attr("y",100)
+	.attr("x",width/2 + 10)
+	.attr("y",95)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",14)
+	.attr("font-size",10)
 	.text("Too Hot");
 
 var coldLegend = canvas.append("text")
 	.attr("id", "coldLegend")
 	.attr("fill", "#2d64c4")
-	.attr("x",width/2)
-	.attr("y",725)
+	.attr("x",width/2 + 10)
+	.attr("y",380)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",14)
+	.attr("font-size",10)
 	.text("Too Cold");
 
 // Legend Colors (Base/Advanced)
 
+var baseLegend = canvas.append("text")
+	.attr("id", "baseLegend")
+	.attr("fill", "grey")
+	.attr("x",180)
+	.attr("y",50)
+	.attr("font-family","Lucida Sans Unicode")
+	.attr("font-size", 12)
+	.text("Base: ");
+
 var baseLegendLine = canvas.append("line")
 	.attr("id", "baseLegendLine")
-	.attr("x1", 470)
-	.attr("y1", 35)
-	.attr("x2",515)
-	.attr("y2",35)
+	.attr("x1", 215)
+	.attr("y1", 45)
+	.attr("x2", 240)
+	.attr("y2", 45)
 	.attr("stroke","black")
 	.attr("stroke-width",10)
 
-var advancedLegendLine = canvas.append("text")
+var advancedLegend = canvas.append("text")
 	.attr("id", "advancedLegendLine")
 	.attr("fill", "grey")
-	.attr("x",535)
-	.attr("y",40)
+	.attr("x",300)
+	.attr("y",50)
 	.attr("font-family","Lucida Sans Unicode")
-	.attr("font-size",18)
+	.attr("font-size",12)
 	.text("Advanced: ");
 
 var advancedLegendLine = canvas.append("line")
 	.attr("id", "advancedLegendLine")
-	.attr("x1", 645)
-	.attr("y1", 35)
-	.attr("x2",690)
-	.attr("y2",35)
+	.attr("x1", 365)
+	.attr("y1", 45)
+	.attr("x2",390)
+	.attr("y2", 45)
 	.attr("stroke","#ef634a")
 	.attr("stroke-width",10)
 
@@ -542,7 +552,7 @@ var bisectDate = d3.bisector(function(d) { return d3.timeParse("%Y-%m-%d %H:%M:%
 // Append cirlce where mouse is
 focus.append("circle")
 	.attr("class", "circleClass")
-	.attr("r", 10)
+	.attr("r", 5)
 	.style("fill", "none")
 	.style("stroke", "black");
 
@@ -565,6 +575,13 @@ focus.append("line")
     .attr("x2", 925);
 
 // Tool tip text values (air temp, rh, air speed, clo, met)
+
+focus.append("text")
+    .attr("class", "dateToolTip")
+    .style("stroke", "black")
+    .attr("dx", 12)
+    .attr("dy", "-2.5em");
+
 focus.append("text")
     .attr("class", "tempToolTip")
     .style("stroke", "black")
@@ -603,8 +620,8 @@ focus.append("text")
 
 // Appending mouse over plot area
 canvas.append("rect")                                     
-    .attr("width", 928)                              
-    .attr("height", 665)
+    .attr("width", 420)                              
+    .attr("height", 320)
     .style("fill", "none")                             
     .style("pointer-events", "all")
     .attr("transform", "translate(70, 75)")          
@@ -632,12 +649,18 @@ function mousemove() {
 		.attr("transform", 
 			"translate(" + xScaleToolTip(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time)) + "," + 
 			yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)) + ")")
-		.attr("y2", 740 - yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)));
+		.attr("y2", 390 - yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)));
 
   	focus.select(".y")
   		.attr("transform",
   			"translate("+ 855 * -1 + "," + yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)) + ")")
-  		.attr("x2", 2000);
+  		.attr("x2", 1350);
+
+  	focus.select("text.dateToolTip")
+      .attr("transform",
+            "translate(" + xScaleToolTip(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time)) + "," + 
+            yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)) + ")")
+      .text(d3.timeFormat("%B %d, %H:%M")(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time)));	
 
   	focus.select("text.tempToolTip")
       .attr("transform",
@@ -819,7 +842,7 @@ function updateData(){
 			d.energy_cost= +d.energy_cost
 			d.kwh= +d.kwh
 			d.relative_humidity= +d.relative_humidity
-			d.sqft_percent= +d.sqft_percent
+			// d.sqft_percent= +d.sqft_percent
 			d.water_temperature= +d.water_temperature
 			d.base_air_temp= +d.base_air_temp
 			d.base_rh = +d.base_rh
@@ -859,66 +882,66 @@ function updateData(){
 	if (room == "B23-104B"){
 		var baseValueLine = d3.line()
 		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
-		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85));})
+		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85));})
 
 		// Base Model Average PMV
-		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85);}).toFixed(2)
+		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85);}).toFixed(2)
 
 		// Total Data Point Counts
-		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -3 & PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= 3;}).length
+		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -3 & PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) <= 3;}).length
 
 		// Percentage of Time when Base Model is above .5 PMV (Too Hot)
-		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}).length) / totalCounts 
+		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) > .5;}).length) / totalCounts 
 		document.getElementById("perBaseHotPMV").innerHTML = Math.round(perBaseHotPMV * 100) + "%";
 
 		// Percentage of Time when Base Model is below -.5 PMV (Too Cold)
-		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5;}).length) / totalCounts 
+		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) < -.5;}).length) / totalCounts 
 		document.getElementById("perBaseColdPMV").innerHTML = Math.round(perBaseColdPMV * 100) + "%";
 
 		// Percentage of Time when Base Model is between -.5 and .5 PMV (Comfortable)
-		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 &
-		 PMV(d.air_temperature, d.relative_humidity, 77.17, 0.10, 0.71, 0.85) <= .5;}).length) / totalCounts
+		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -.5 &
+		 PMV(d.air_temperature, d.relative_humidity, 70.29, 0.10, 0.71, 0.85) <= .5;}).length) / totalCounts
 		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
 
 		// 42° F Base Comparision
 		var perHot42 = 0
 		document.getElementById("perHot42").innerHTML = perHot42 + "%"
 
-		var perComf42 = 85
+		var perComf42 = 0
 		document.getElementById("perComf42").innerHTML = perComf42 + "%"
 
-		var perCold42 = 15
+		var perCold42 = 100
 		document.getElementById("perCold42").innerHTML = perCold42 + "%"
 
 		// Base Model Average PMV Metrics
 
 		// Average PMV When PMV > .5 (Too Hot)
-		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
+		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) > .5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85)})
 		
 		// Average PMV When PMV < -.5 (Too Cold)
-		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
+		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) < -.5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85)})
 
 		// Average PMV When PMV is between -.5 and .5 (Comfortable)
-		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 && 
-			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= .5 ;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
+		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) <= .5 ;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85)})
 
 		// Update Base kWh Metrics
 
-		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}),
+		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) > .5;}),
 			function(d) {return d.base_kwh})
 		if (baseHotKWH == null) {baseHotKWH = 0} else {baseHotKWH}
 		document.getElementById("baseHotKWH").innerHTML = baseHotKWH.toFixed(1)
 
-		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5}),
+		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) < -.5}),
 			function(d){return d.base_kwh})
 		if (baseColdKWH == null) {baseColdKWH = 0} else {baseColdKWH}
 		document.getElementById("baseColdKWH").innerHTML = baseColdKWH.toFixed(1)
 
-		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 && 
-			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= .5}),
+		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) <= .5}),
 			function(d) {return d.base_kwh})
 		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
 		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
@@ -927,16 +950,16 @@ function updateData(){
 		var hotKWH42 = 0
 		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
 
-		var comfKWH42 = 1563.8
+		var comfKWH42 = 0
 		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
 
-		var coldKWH42 = 196.7
+		var coldKWH42 = 1387.0
 		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
 
-		var diffTotal42 = 1760.5
+		var diffTotal42 = 1387.0
 		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
 
-		var diffCost42 = 510.55
+		var diffCost42 = 402.23
 		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
 
 		// Base Model PMV/kWh
@@ -961,66 +984,66 @@ function updateData(){
 	} else if (room == "B23-210B") {
 		var baseValueLine = d3.line()
 		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
-		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85));})
+		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85));})
 
 		// Base Model Average PMV
-		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85);}).toFixed(2)
+		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85);}).toFixed(2)
 
 		// Total Data Point Counts
-		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -3 & PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= 3;}).length
+		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -3 & PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) <= 3;}).length
 
 		// Percentage of Time when Base Model is above .5 PMV (Too Hot)
-		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}).length) / totalCounts 
+		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) > .5;}).length) / totalCounts 
 		document.getElementById("perBaseHotPMV").innerHTML = Math.round(perBaseHotPMV * 100) + "%";
 
 		// Percentage of Time when Base Model is below -.5 PMV (Too Cold)
-		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5;}).length) / totalCounts 
+		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) < -.5;}).length) / totalCounts 
 		document.getElementById("perBaseColdPMV").innerHTML = Math.round(perBaseColdPMV * 100) + "%";
 
 		// Percentage of Time when Base Model is between -.5 and .5 PMV (Comfortable)
-		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 &
-		 PMV(d.air_temperature, d.relative_humidity, 77.17, 0.10, 0.71, 0.85) <= .5;}).length) / totalCounts
+		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -.5 &
+		 PMV(d.air_temperature, d.relative_humidity, 70.29, 0.10, 0.71, 0.85) <= .5;}).length) / totalCounts
 		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
 
 		// 42° F Base Comparision
 		var perHot42 = 0
 		document.getElementById("perHot42").innerHTML = perHot42 + "%"
 
-		var perComf42 = 85
+		var perComf42 = 0
 		document.getElementById("perComf42").innerHTML = perComf42 + "%"
 
-		var perCold42 = 15
+		var perCold42 = 100
 		document.getElementById("perCold42").innerHTML = perCold42 + "%"
 
 		// Base Model Average PMV Metrics
 
 		// Average PMV When PMV > .5 (Too Hot)
-		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
+		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) > .5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85)})
 		
 		// Average PMV When PMV < -.5 (Too Cold)
-		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
+		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) < -.5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85)})
 
 		// Average PMV When PMV is between -.5 and .5 (Comfortable)
-		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 && 
-			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= .5 ;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85)})
+		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) <= .5 ;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85)})
 
 		// Update Base kWh Metrics
 
-		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) > .5;}),
+		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) > .5;}),
 			function(d) {return d.base_kwh})
 		if (baseHotKWH == null) {baseHotKWH = 0} else {baseHotKWH}
 		document.getElementById("baseHotKWH").innerHTML = baseHotKWH.toFixed(1)
 
-		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) < -.5}),
+		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) < -.5}),
 			function(d){return d.base_kwh})
 		if (baseColdKWH == null) {baseColdKWH = 0} else {baseColdKWH}
 		document.getElementById("baseColdKWH").innerHTML = baseColdKWH.toFixed(1)
 
-		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) >= -.5 && 
-			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.71, 0.85) <= .5}),
+		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.71, 0.85) <= .5}),
 			function(d) {return d.base_kwh})
 		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
 		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
@@ -1030,16 +1053,16 @@ function updateData(){
 		var hotKWH42 = 0
 		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
 
-		var comfKWH42 = 1563.8
+		var comfKWH42 = 0
 		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
 
-		var coldKWH42 = 196.7
+		var coldKWH42 = 1387.0
 		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
 
-		var diffTotal42 = 1760.5
+		var diffTotal42 = 1387.0
 		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
 
-		var diffCost42 = 510.55
+		var diffCost42 = 402.23
 		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
 
 		// Base Model PMV/kWh
@@ -1063,32 +1086,32 @@ function updateData(){
 	} else if (room == "B23-LC"){
 		var baseValueLine = d3.line()
 		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
-		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36));})
+		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36));})
 
 		// Base Model Average PMV
-		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36);}).toFixed(2)
+		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36);}).toFixed(2)
 
 		// Total Data Point Counts
-		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) >= -3 & PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) <= 3;}).length
+		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -3 & PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= 3;}).length
 
 		// Percentage of Time when Base Model is above .5 PMV (Too Hot)
-		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) > .5;}).length) / totalCounts 
+		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}).length) / totalCounts 
 		document.getElementById("perBaseHotPMV").innerHTML = Math.round(perBaseHotPMV * 100) + "%";
 
 		// Percentage of Time when Base Model is below -.5 PMV (Too Cold)
-		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) < -.5;}).length) / totalCounts 
+		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5;}).length) / totalCounts 
 		document.getElementById("perBaseColdPMV").innerHTML = Math.round(perBaseColdPMV * 100) + "%";
 
 		// Percentage of Time when Base Model is between -.5 and .5 PMV (Comfortable)
-		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) >= -.5 &
-		 PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) <= .5;}).length) / totalCounts
+		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 &
+		 PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= .5;}).length) / totalCounts
 		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
 
 		// 42° F Base Comparision
-		var perHot42 = 95
+		var perHot42 = 0
 		document.getElementById("perHot42").innerHTML = perHot42 + "%"
 
-		var perComf42 = 5
+		var perComf42 = 100
 		document.getElementById("perComf42").innerHTML = perComf42 + "%"
 
 		var perCold42 = 0
@@ -1097,58 +1120,58 @@ function updateData(){
 		// Base Model Average PMV Metrics
 
 		// Average PMV When PMV > .5 (Too Hot)
-		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) > .5;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36)})
+		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
 
 		// Average PMV When PMV < -.5 (Too Cold)
-		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) < -.5;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36)})		
+		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})		
 
 		// Average PMV When PMV is between -.5 and .5 (Comfortable)
-		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) >= -.5 && 
-			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) <= .5 ;}), 
-			function(d){return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36)})
+		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= .5 ;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
 
 		// Update Base kWh Metrics
 
-		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) > .5;}),
+		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}),
 			function(d) {return d.base_kwh})
 		if (baseHotKWH == null) {baseHotKWH = 0} else {baseHotKWH}
 		document.getElementById("baseHotKWH").innerHTML = baseHotKWH.toFixed(1)
 
-		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) < -.5}),
+		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5}),
 			function(d){return d.base_kwh})
 		if (baseColdKWH == null) {baseColdKWH = 0} else {baseColdKWH}
 		document.getElementById("baseColdKWH").innerHTML = baseColdKWH.toFixed(1)
 
-		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) >= -.5 && 
-			PMV(d.base_air_temp, d.base_rh, 77.17, 0.10, 0.64, 1.36) <= .5}),
+		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= .5}),
 			function(d) {return d.base_kwh})
 		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
 		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
 
 		// 42° F Base Comparision
-		document.getElementById("hotKWH42").innerHTML = "1703.2"
-		document.getElementById("comfKWH42").innerHTML = "57.3"
-		document.getElementById("coldKWH42").innerHTML = "0.0"
-		document.getElementById("diffTotal42").innerHTML = "1760.5"
-		document.getElementById("diffCost42").innerHTML = "$510.55"
+		// document.getElementById("hotKWH42").innerHTML = "1703.2"
+		// document.getElementById("comfKWH42").innerHTML = "57.3"
+		// document.getElementById("coldKWH42").innerHTML = "0.0"
+		// document.getElementById("diffTotal42").innerHTML = "1760.5"
+		// document.getElementById("diffCost42").innerHTML = "$510.55"
 
 		// 42° F Base Comparision
 
-		var hotKWH42 = 1703.2
+		var hotKWH42 = 0.0
 		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
 
-		var comfKWH42 = 57.3
+		var comfKWH42 = 1387.0
 		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
 
 		var coldKWH42 = 0.0
 		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
 
-		var diffTotal42 = 1760.5
+		var diffTotal42 = 1387.0
 		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
 
-		var diffCost42 = 510.55
+		var diffCost42 = 402.23
 		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
 
 		// Base Model PMV/kWh
@@ -1168,6 +1191,207 @@ function updateData(){
 
 		// 42° F Base Comparision
 		document.getElementById("comfDiff42").innerHTML = "0.003"
+	} else if (room == "B23-Hall1"){
+		var baseValueLine = d3.line()
+		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
+		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36));})
+
+		// Base Model Average PMV
+		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36);}).toFixed(2)
+
+		// Total Data Point Counts
+		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -3 & PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= 3;}).length
+
+		// Percentage of Time when Base Model is above .5 PMV (Too Hot)
+		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}).length) / totalCounts 
+		document.getElementById("perBaseHotPMV").innerHTML = Math.round(perBaseHotPMV * 100) + "%";
+
+		// Percentage of Time when Base Model is below -.5 PMV (Too Cold)
+		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5;}).length) / totalCounts 
+		document.getElementById("perBaseColdPMV").innerHTML = Math.round(perBaseColdPMV * 100) + "%";
+
+		// Percentage of Time when Base Model is between -.5 and .5 PMV (Comfortable)
+		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 &
+		 PMV(d.air_temperature, d.relative_humidity, 70.29, 0.10, 0.64, 1.36) <= .5;}).length) / totalCounts
+		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
+
+		// 42° F Base Comparision
+		var perHot42 = 0
+		document.getElementById("perHot42").innerHTML = perHot42 + "%"
+
+		var perComf42 = 100
+		document.getElementById("perComf42").innerHTML = perComf42 + "%"
+
+		var perCold42 = 0
+		document.getElementById("perCold42").innerHTML = perCold42 + "%"
+
+		// Base Model Average PMV Metrics
+
+		// Average PMV When PMV > .5 (Too Hot)
+		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
+		
+		// Average PMV When PMV < -.5 (Too Cold)
+		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
+
+		// Average PMV When PMV is between -.5 and .5 (Comfortable)
+		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= .5 ;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
+
+		// Update Base kWh Metrics
+
+		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}),
+			function(d) {return d.base_kwh})
+		if (baseHotKWH == null) {baseHotKWH = 0} else {baseHotKWH}
+		document.getElementById("baseHotKWH").innerHTML = baseHotKWH.toFixed(1)
+
+		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5}),
+			function(d){return d.base_kwh})
+		if (baseColdKWH == null) {baseColdKWH = 0} else {baseColdKWH}
+		document.getElementById("baseColdKWH").innerHTML = baseColdKWH.toFixed(1)
+
+		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= .5}),
+			function(d) {return d.base_kwh})
+		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
+		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
+
+		// 42° F Base Comparision
+		var hotKWH42 = 0
+		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
+
+		var comfKWH42 = 1387.0
+		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
+
+		var coldKWH42 = 0.0
+		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
+
+		var diffTotal42 = 1387.0
+		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
+
+		var diffCost42 = 402.23
+		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
+
+		// Base Model PMV/kWh
+
+		var baseTotal = baseHotKWH + baseComfKWH + baseColdKWH
+		document.getElementById("baseTotal").innerHTML = baseTotal.toFixed(1)
+
+		var baseHotEnergyPMV = avgBaseHotPMV / baseHotKWH
+		if (isNaN(baseHotEnergyPMV)) {baseHotEnergyPMV = 0} else {baseHotEnergyPMV}
+
+		var baseColdEnergyPMV = avgBaseColdPMV / baseColdKWH
+		if (isNaN(baseColdEnergyPMV)) {baseColdEnergyPMV = 0} else {baseColdEnergyPMV}
+
+		var baseComfEnergyPMV = (perBaseComfPMV * 100) / baseTotal
+		if (isNaN(baseComfEnergyPMV)) {baseComfEnergyPMV = 0} else {baseComfEnergyPMV}
+		document.getElementById("baseComfEnergyPMV").innerHTML = baseComfEnergyPMV.toFixed(3)
+
+		// 42° F Base Comparision
+		document.getElementById("comfDiff42").innerHTML = "0.048"
+
+	} else if (room == "B23-Hall2") {
+		var baseValueLine = d3.line()
+		.x(function(d){return xScale(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time));}) 
+		.y(function(d){return yScale(PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36));})
+
+		// Base Model Average PMV
+		var avgBasePMV = d3.mean(data, function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36);}).toFixed(2)
+
+		// Total Data Point Counts
+		var totalCounts = data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -3 & PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= 3;}).length
+
+		// Percentage of Time when Base Model is above .5 PMV (Too Hot)
+		var perBaseHotPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}).length) / totalCounts 
+		document.getElementById("perBaseHotPMV").innerHTML = Math.round(perBaseHotPMV * 100) + "%";
+
+		// Percentage of Time when Base Model is below -.5 PMV (Too Cold)
+		var perBaseColdPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5;}).length) / totalCounts 
+		document.getElementById("perBaseColdPMV").innerHTML = Math.round(perBaseColdPMV * 100) + "%";
+
+		// Percentage of Time when Base Model is between -.5 and .5 PMV (Comfortable)
+		var perBaseComfPMV = (data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 &
+		 PMV(d.air_temperature, d.relative_humidity, 70.29, 0.10, 0.64, 1.36) <= .5;}).length) / totalCounts
+		document.getElementById("perBaseComfPMV").innerHTML = Math.round(perBaseComfPMV * 100) + "%";
+
+		// 42° F Base Comparision
+		var perHot42 = 0
+		document.getElementById("perHot42").innerHTML = perHot42 + "%"
+
+		var perComf42 = 100
+		document.getElementById("perComf42").innerHTML = perComf42 + "%"
+
+		var perCold42 = 0
+		document.getElementById("perCold42").innerHTML = perCold42 + "%"
+
+		// Base Model Average PMV Metrics
+
+		// Average PMV When PMV > .5 (Too Hot)
+		var avgBaseHotPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
+		
+		// Average PMV When PMV < -.5 (Too Cold)
+		var avgBaseColdPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
+
+		// Average PMV When PMV is between -.5 and .5 (Comfortable)
+		var avgBaseComfPMV = d3.mean(data.filter(function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= .5 ;}), 
+			function(d){return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36)})
+
+		// Update Base kWh Metrics
+
+		var baseHotKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) > .5;}),
+			function(d) {return d.base_kwh})
+		if (baseHotKWH == null) {baseHotKWH = 0} else {baseHotKWH}
+		document.getElementById("baseHotKWH").innerHTML = baseHotKWH.toFixed(1)
+
+		var baseColdKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) < -.5}),
+			function(d){return d.base_kwh})
+		if (baseColdKWH == null) {baseColdKWH = 0} else {baseColdKWH}
+		document.getElementById("baseColdKWH").innerHTML = baseColdKWH.toFixed(1)
+
+		var baseComfKWH = d3.sum(data.filter(function(d) {return PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) >= -.5 && 
+			PMV(d.base_air_temp, d.base_rh, 70.29, 0.10, 0.64, 1.36) <= .5}),
+			function(d) {return d.base_kwh})
+		if (baseComfKWH == null) {baseComfKWH = 0} else {baseComfKWH}
+		document.getElementById("baseComfKWH").innerHTML = baseComfKWH.toFixed(1)
+
+		// 42° F Base Comparision
+		var hotKWH42 = 0.0
+		document.getElementById("hotKWH42").innerHTML = hotKWH42.toFixed(1)
+
+		var comfKWH42 = 1387.0
+		document.getElementById("comfKWH42").innerHTML = comfKWH42.toFixed(1)
+
+		var coldKWH42 = 0.0
+		document.getElementById("coldKWH42").innerHTML = coldKWH42.toFixed(1)
+
+		var diffTotal42 = 1387.0
+		document.getElementById("diffTotal42").innerHTML = diffTotal42.toFixed(1)
+
+		var diffCost42 = 402.23
+		document.getElementById("diffCost42").innerHTML = "$" + diffCost42.toFixed(2)
+
+		// Base Model PMV/kWh
+
+		var baseTotal = baseHotKWH + baseComfKWH + baseColdKWH
+		document.getElementById("baseTotal").innerHTML = baseTotal.toFixed(1)
+
+		var baseHotEnergyPMV = avgBaseHotPMV / baseHotKWH
+		if (isNaN(baseHotEnergyPMV)) {baseHotEnergyPMV = 0} else {baseHotEnergyPMV}
+
+		var baseColdEnergyPMV = avgBaseColdPMV / baseColdKWH
+		if (isNaN(baseColdEnergyPMV)) {baseColdEnergyPMV = 0} else {baseColdEnergyPMV}
+
+		var baseComfEnergyPMV = (perBaseComfPMV * 100) / baseTotal
+		if (isNaN(baseComfEnergyPMV)) {baseComfEnergyPMV = 0} else {baseComfEnergyPMV}
+		document.getElementById("baseComfEnergyPMV").innerHTML = baseComfEnergyPMV.toFixed(3)
+
+		// 42° F Base Comparision
+		document.getElementById("comfDiff42").innerHTML = "0.048"
 	}
 
 	// Advanced Model Plot
@@ -1311,21 +1535,21 @@ function updateData(){
 	}
 
 	if (summary1TC == Number.POSITIVE_INFINITY || summary1TC == Number.NEGATIVE_INFINITY) {
-		document.getElementById("summary1TC").innerHTML = "N/A"
-		document.getElementById("summary1TC").style.color = "#525252";
+		// document.getElementById("summary1TC").innerHTML = "N/A"
+		// document.getElementById("summary1TC").style.color = "#525252";
 	} else if (Math.round(summary1TC) > 0) {
-		document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
-		document.getElementById("summary1TC").style.color = "#24e016"
+		// document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
+		// document.getElementById("summary1TC").style.color = "#24e016"
 	} else if (Math.round(summary1TC) < 0) {
-		document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
-		document.getElementById("summary1TC").style.color = "red"
+		// document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
+		// document.getElementById("summary1TC").style.color = "red"
 	} else if (Math.round(summary1TC) == 0) {
-		document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
-		document.getElementById("summary1TC").style.color = "#525252";
+		// document.getElementById("summary1TC").innerHTML = Math.round(summary1TC) + "%"
+		// document.getElementById("summary1TC").style.color = "#525252";
 	}
 
 	
-	var summary1Energy = ((baseTotal - diffTotal42) / baseTotal) * 100
+	var summary1Energy = ((baseTotal - diffTotal42) / diffTotal42) * 100
 	if (Math.round(summary1Energy) > 0) {
 		document.getElementById("summary1Energy").innerHTML = Math.round(summary1Energy) + "%"
 		document.getElementById("summary1Energy").style.color = "red"
@@ -1340,12 +1564,12 @@ function updateData(){
 
 	//Update Summary Box
 	
-	if (Window == "Closed" && ceiling == "Off" && roof == "No" && ac == "No" && mrt == "Base" && wind == "Base" && met == "Base" && clo == "Base"){
+	if (Window == "Closed" && ceiling == "Off" && roof == "No" && ac == "No" && mrt == "Base" && wind == "Base" && met == "Base" && clo == "Base" && setpoint == 0){
 		document.getElementById("placeHolder").innerHTML = " "
-	} else if (Window == "Closed" && ceiling == "Off" && roof == "No" && ac == "No") {
+	} else if (Window == "Closed" && ceiling == "Off" && roof == "No" && ac == "No" && setpoint == 0) {
 		document.getElementById("placeHolder").innerHTML = document.getElementById("summary2").innerHTML;
 
-		var summary2TC = ((perAdvComfPMV - perBaseComfPMV) / perAdvComfPMV) * 100
+		var summary2TC = ((perAdvComfPMV - perBaseComfPMV) / perBaseComfPMV) * 100
 		if (summary2TC > 0) {
 			document.getElementById("summary2TC").innerHTML = Math.round(summary2TC) + "%"
 			document.getElementById("summary2TC").style.color = "#24e016"
@@ -1360,7 +1584,7 @@ function updateData(){
 	} else {
 		document.getElementById("placeHolder").innerHTML = document.getElementById("summary3").innerHTML;
 
-		var summary3TC = ((perAdvComfPMV - perBaseComfPMV) / perAdvComfPMV) * 100
+		var summary3TC = ((perAdvComfPMV - perBaseComfPMV) / perBaseComfPMV) * 100
 		if (summary3TC == Number.POSITIVE_INFINITY || summary3TC == Number.NEGATIVE_INFINITY) {
 			document.getElementById("summary3TC").innerHTML = "N/A"
 			document.getElementById("summary3TC").style.color = "#525252";
@@ -1375,7 +1599,7 @@ function updateData(){
 			document.getElementById("summary3TC").style.color = "#525252";
 		}
 		
-		var summary3Energy = ((advTotal - baseTotal) / advTotal) * 100
+		var summary3Energy = ((advTotal - baseTotal) / baseTotal) * 100
 
 		if (summary3Energy < -99999) {
 			document.getElementById("summary3Energy").innerHTML = "No Energy Used"
@@ -1391,7 +1615,7 @@ function updateData(){
 			document.getElementById("summary3Energy").style.color = "#24e016"
 		}
 
-		var summary3PMV = ((advComfEnergyPMV - baseComfEnergyPMV) / advComfEnergyPMV) * 100
+		var summary3PMV = ((advComfEnergyPMV - baseComfEnergyPMV) / baseComfEnergyPMV) * 100
 
 		if (summary3PMV == Number.POSITIVE_INFINITY || summary3PMV == Number.NEGATIVE_INFINITY) {
 			document.getElementById("summary3TC").innerHTML = "N/A"
@@ -1430,7 +1654,7 @@ function updateData(){
 
 	focus.append("circle")
 		.attr("class", "circleClass")
-		.attr("r", 10)
+		.attr("r", 5)
 		.style("fill", "none")
 		.style("stroke", "#e55a2b");
 
@@ -1451,6 +1675,13 @@ function updateData(){
 	    .style("opacity", 0.5)
 	    .attr("x1", 925)
 	    .attr("x2", 925);
+
+	// Date Tool Tip
+	focus.append("text")
+		.attr("class", "dateToolTip")
+		.style("stroke", "#e55a2b")
+		.attr("dx", 12)
+		.attr("dy", "-2.5em")
 
 	focus.append("text")
 	    .attr("class", "tempToolTip")
@@ -1489,8 +1720,8 @@ function updateData(){
 	    .attr("dy", "6.5em");
 	                             
 	canvas.append("rect")                                     
-	    .attr("width", 925)                              
-	    .attr("height", 670)
+	    .attr("width", 420)                              
+	    .attr("height", 320)
 	    .style("fill", "none")                             
 	    .style("pointer-events", "all")
 	    .attr("transform", "translate(70, 75)")                  
@@ -1580,12 +1811,18 @@ function updateData(){
 		.attr("transform", 
 			"translate(" + xScaleToolTip(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time)) + "," + 
 			yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)) + ")")
-		.attr("y2", 740 - yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)));
+		.attr("y2", 390 - yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)));
 
   	focus.select(".y")
   		.attr("transform",
   			"translate("+ 855 * -1 + "," + yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)) + ")")
-  		.attr("x2", 2000);
+  		.attr("x2", 1350);
+
+  	focus.select("text.dateToolTip")
+      .attr("transform",
+            "translate(" + xScaleToolTip(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time)) + "," + 
+            yScaleToolTip(PMV(d.air_temperature, d.relative_humidity, d.mrt, d.air_speed, d.clo_value, d.metabolic_rate)) + ")")
+      .text(d3.timeFormat("%B %d, %H:%M")(d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date_time)));
 
   	focus.select("text.tempToolTip")
       .attr("transform",

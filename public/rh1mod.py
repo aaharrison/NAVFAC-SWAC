@@ -75,13 +75,13 @@ def getData(args):
     records = cursor.fetchall()
 
     # Create dataframe from the fetched data
-    df = pd.DataFrame(records, columns=['date_time', "building", "location", "sqft_percent", "water_temperature", "air_temperature", "relative_humidity", "kwh", "energy_cost", "base_mrt", "base_air_speed", "base_metabolic", "base_clo", "advanced_mrt", "advanced_air_speed", "advanced_metabolic", "advanced_clo", "outdoor_temp", "outdoor_rh", "solar_rad"])
+    df = pd.DataFrame(records, columns=['date_time', "building", "location", "water_temperature", "air_temperature", "relative_humidity", "kwh", "energy_cost", "base_mrt", "base_air_speed", "base_metabolic", "base_clo", "advanced_mrt", "advanced_air_speed", "advanced_metabolic", "advanced_clo", "outdoor_temp", "outdoor_rh", "solar_rad"])
 
     # Close the connection
     conn.close()
 
-    df = df[["date_time", "building", "location", "sqft_percent", "water_temperature", "air_temperature", "relative_humidity", "kwh", "energy_cost", mrt, wind, met, clo, "outdoor_temp", "outdoor_rh", "solar_rad"]]
-    df.columns = ["date_time", "building", "location", "sqft_percent", "water_temperature", "air_temperature", "relative_humidity", "kwh", "energy_cost", "mrt", "air_speed", "metabolic_rate", "clo_value", "outdoor_temp", "outdoor_rh", "solar_rad"]
+    df = df[["date_time", "building", "location", "water_temperature", "air_temperature", "relative_humidity", "kwh", "energy_cost", mrt, wind, met, clo, "outdoor_temp", "outdoor_rh", "solar_rad"]]
+    df.columns = ["date_time", "building", "location", "water_temperature", "air_temperature", "relative_humidity", "kwh", "energy_cost", "mrt", "air_speed", "metabolic_rate", "clo_value", "outdoor_temp", "outdoor_rh", "solar_rad"]
 
     df["base_air_temp"] = df["air_temperature"].copy()
     df["base_rh"] = df["relative_humidity"].copy()
@@ -129,42 +129,42 @@ def getData(args):
         # Dynamic Setpoints Heating = .5% per degree decrease (Refer to SWAC Tool Reference.xlsx)
 
         for temp, wind, kwh in zip(df["air_temperature"], df["air_speed"], df["kwh"]):
-            if temp >= 82 and ceiling == "Off" and window == "Closed":
+            if temp >= 74.5 and ceiling == "Off" and window == "Closed":
                 newAirTemp.append(temp)
                 newAirSpeed.append(wind)
                 newKWH.append(kwh * .65)
-            elif temp >= 82 and ceiling == "On" and window == "Open":
-                newAirTemp.append(temp - 8)
+            elif temp >= 74.5 and ceiling == "On" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + 1.5)
                 newKWH.append(kwh * 0.58)
-            elif temp >= 82 and ceiling == "On" and window == "Closed":
-                newAirTemp.append(temp - 4)
+            elif temp >= 74.5 and ceiling == "On" and window == "Closed":
+                newAirTemp.append(temp)
                 newAirSpeed.append(wind + 1)
                 newKWH.append(kwh * 0.61)
-            elif temp >= 82 and ceiling == "Off" and window == "Open":
-                newAirTemp.append(temp - 4)
+            elif temp >= 74.5 and ceiling == "Off" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + .5)            
                 newKWH.append(kwh * 0.62)
-            elif temp < 82 and temp >= 78 and ceiling == "Off" and window == "Closed":
+            elif temp < 74.5 and temp >= 74 and ceiling == "Off" and window == "Closed":
                 newAirTemp.append(temp)
                 newAirSpeed.append(wind)
                 newKWH.append(kwh * .65)
-            elif temp < 82 and temp >= 78 and ceiling == "On" and window == "Closed":
-                newAirTemp.append(temp - 4)
+            elif temp < 74.5 and temp >= 74 and ceiling == "On" and window == "Closed":
+                newAirTemp.append(temp)
                 newAirSpeed.append(wind + 1)
                 newKWH.append(kwh * 0.61)
-            elif temp < 82 and temp >= 78 and ceiling == "Off" and window == "Open":
-                newAirTemp.append(temp - 4)
+            elif temp < 74.5 and temp >= 74 and ceiling == "Off" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + .5)
                 newKWH.append(kwh * 0.62)
-            elif temp < 82 and temp >= 78 and ceiling == "On" and window == "Open":
-                newAirTemp.append(temp - 4)
-                newAirSpeed.append(wind + 1)
+            elif temp < 74.5 and temp >= 74 and ceiling == "On" and window == "Open":
+                newAirTemp.append(temp - .5)
+                newAirSpeed.append(wind + 1.5)
                 newKWH.append(kwh * 0.61)
             else:
                 newAirTemp.append(temp)
                 newAirSpeed.append(wind)
-                newKWH.append(kwh * 0.65)
+                newKWH.append(kwh * 0.65)  
 
         df["air_temperature"] = newAirTemp
         df["air_speed"] = newAirSpeed
@@ -206,37 +206,37 @@ def getData(args):
         newKWH = []
 
         for temp, wind, kwh in zip(df["air_temperature"], df["air_speed"], df["kwh"]):
-            if temp >= 82 and ceiling == "Off" and window == "Closed":
+            if temp >= 74.5 and ceiling == "Off" and window == "Closed":
                 newAirTemp.append(temp)
                 newAirSpeed.append(wind)
                 newKWH.append(kwh * 0.65)
-            elif temp >= 82 and ceiling == "On" and window == "Open":
-                newAirTemp.append(temp - 8)
+            elif temp >= 74.5 and ceiling == "On" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + 1.5)
                 newKWH.append(kwh * 0.58)
-            elif temp >= 82 and ceiling == "On" and window == "Closed":
-                newAirTemp.append(temp - 4)
+            elif temp >= 74.5 and ceiling == "On" and window == "Closed":
+                newAirTemp.append(temp)
                 newAirSpeed.append(wind + 1)
                 newKWH.append(kwh * 0.61)
-            elif temp >= 82 and ceiling == "Off" and window == "Open":
-                newAirTemp.append(temp - 4)
+            elif temp >= 74.5 and ceiling == "Off" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + .5)            
                 newKWH.append(kwh * 0.62)
-            elif temp < 82 and temp >= 78 and ceiling == "Off" and window == "Closed":
+            elif temp < 74.5 and temp >= 74 and ceiling == "Off" and window == "Closed":
                 newAirTemp.append(temp)
                 newAirSpeed.append(wind)
                 newKWH.append(kwh * 0.65)
-            elif temp < 82 and temp >= 78 and ceiling == "On" and window == "Closed":
-                newAirTemp.append(temp - 4)
+            elif temp < 74.5 and temp >= 74 and ceiling == "On" and window == "Closed":
+                newAirTemp.append(temp)
                 newAirSpeed.append(wind + 1)
                 newKWH.append(kwh * 0.61)
-            elif temp < 82 and temp >= 78 and ceiling == "Off" and window == "Open":
-                newAirTemp.append(temp - 4)
+            elif temp < 74.5 and temp >= 74 and ceiling == "Off" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + .5)
                 newKWH.append(kwh * 0.62)
-            elif temp < 82 and temp >= 78 and ceiling == "On" and window == "Open":
-                newAirTemp.append(temp - 4)
-                newAirSpeed.append(wind + 1)
+            elif temp < 74.5 and temp >= 74 and ceiling == "On" and window == "Open":
+                newAirTemp.append(temp - .5)
+                newAirSpeed.append(wind + 1.5)
                 newKWH.append(kwh * 0.61)
             else:
                 newAirTemp.append(temp)
@@ -265,37 +265,37 @@ def getData(args):
         # Dynamic Setpoints Heating = .5% per degree decrease (Refer to SWAC Tool Reference.xlsx)
 
         for temp, wind, kwh in zip(df["air_temperature"], df["air_speed"], df["kwh"]):
-            if temp >= 82 and ceiling == "Off" and window == "Closed":
+            if temp >= 74.5 and ceiling == "Off" and window == "Closed":
                 newAirTemp.append(temp)
                 newAirSpeed.append(wind)
                 newKWH.append(kwh)
-            elif temp >= 82 and ceiling == "On" and window == "Open":
-                newAirTemp.append(temp - 8)
+            elif temp >= 74.5 and ceiling == "On" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + 1.5)
                 newKWH.append(kwh * .93)
-            elif temp >= 82 and ceiling == "On" and window == "Closed":
-                newAirTemp.append(temp - 4)
+            elif temp >= 74.5 and ceiling == "On" and window == "Closed":
+                newAirTemp.append(temp)
                 newAirSpeed.append(wind + 1)
                 newKWH.append(kwh * .96)
-            elif temp >= 82 and ceiling == "Off" and window == "Open":
-                newAirTemp.append(temp - 4)
+            elif temp >= 74.5 and ceiling == "Off" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + .5)            
                 newKWH.append(kwh * .97)
-            elif temp < 82 and temp >= 78 and ceiling == "Off" and window == "Closed":
+            elif temp < 74.5 and temp >= 74 and ceiling == "Off" and window == "Closed":
                 newAirTemp.append(temp)
                 newAirSpeed.append(wind)
                 newKWH.append(kwh)
-            elif temp < 82 and temp >= 78 and ceiling == "On" and window == "Closed":
-                newAirTemp.append(temp - 4)
+            elif temp < 74.5 and temp >= 74 and ceiling == "On" and window == "Closed":
+                newAirTemp.append(temp)
                 newAirSpeed.append(wind + 1)
                 newKWH.append(kwh * .96)
-            elif temp < 82 and temp >= 78 and ceiling == "Off" and window == "Open":
-                newAirTemp.append(temp - 4)
+            elif temp < 74.5 and temp >= 74 and ceiling == "Off" and window == "Open":
+                newAirTemp.append(temp - .5)
                 newAirSpeed.append(wind + .5)
                 newKWH.append(kwh * .97)
-            elif temp < 82 and temp >= 78 and ceiling == "On" and window == "Open":
-                newAirTemp.append(temp - 4)
-                newAirSpeed.append(wind + 1)
+            elif temp < 74.5 and temp >= 74 and ceiling == "On" and window == "Open":
+                newAirTemp.append(temp - .5)
+                newAirSpeed.append(wind + 1.5)
                 newKWH.append(kwh * .96)
             else:
                 newAirTemp.append(temp)
@@ -343,9 +343,9 @@ def getData(args):
     # Dynamic Setpoints Heating = .5% per degree decrease (Refer to SWAC Tool Reference.xlsx)
 
     if float(setpoint) < 0:
-        energyMultiplier -= abs(float(setpoint) * .015)
-    elif float(setpoint) > 0:
         energyMultiplier -= abs(float(setpoint) * .005)
+    elif float(setpoint) > 0:
+        energyMultiplier -= abs(float(setpoint) * .015)
     else:
         pass
 
@@ -353,7 +353,7 @@ def getData(args):
 
     df["kwh"] = df["kwh"].apply(lambda x: float(x) * energyMultiplier)
 
-    for column in ["base_air_temp", "base_rh","sqft_percent", "relative_humidity", "energy_cost", "mrt", "metabolic_rate", "clo_value", "outdoor_temp", "outdoor_rh"]:
+    for column in ["base_air_temp", "base_rh", "relative_humidity", "energy_cost", "mrt", "metabolic_rate", "clo_value", "outdoor_temp", "outdoor_rh"]:
         df[column] = df[column].apply(lambda x: float(x))
 
     df = df.set_index("date_time").groupby(pd.TimeGrouper(freq = "10 Min")).mean()

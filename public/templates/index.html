@@ -15,7 +15,7 @@
 
 	<div id = "header">
 		<h1> Roundhouse One + NAVFAC SWAC Thermal Comfort Model <span style = "font-size: 9px; float: bottom;"> Version: Beta </span> </h1>
-		<img style = "float: right; display: inline-block;" src = "http://www.roundhouseone.com/uploads/8/6/4/7/8647479/1447719287.png"/>
+<!-- 		<img style = "float: right; display: inline-block;" src = "https://static.wixstatic.com/media/40f4d6_d419dce444af4851b6e3049afd9407b2~mv2.png/v1/fill/w_184,h_42,al_c,usm_0.66_1.00_0.01/40f4d6_d419dce444af4851b6e3049afd9407b2~mv2.png"/> -->
 	</div>
 
 	<div id = "introText" style = "display: none;">
@@ -55,7 +55,9 @@
 				<select id = "roomSelection" name = "roomSelection" class = "inputs" style = "margin: auto; width: 90%; display: block;" onchange = "run(); updateData();" >
 					<option value="B23-104B">Room 104B</option>w
 					<option value="B23-210B">Room 210B</option>
-					<option value="B23-LC">Room LC</option>
+					<option value="B23-LC">Lower Common</option>
+					<option value="B23-Hall1">1st Hallway</option>
+					<option value="B23-Hall2">2nd Hallway</option>
 				</select>
 				
 
@@ -68,8 +70,8 @@
 				<br>
 				
 				<div style = "width: 95%">
-					42°F Study Start Date: <span style = 'float: right;'> July 01 </span><br>
-					42°F Study End Date: <span style = 'float: right;'> July 05 </span>
+					42°F Study Start Date: <span style = 'float: right;'> November 9 </span><br>
+					42°F Study End Date: <span style = 'float: right;'> November 23 </span>
 					<hr style = "width: 200px;">
 
 
@@ -135,61 +137,61 @@
 					</h3>
 				</div>
 
-				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "25" width = "25" id = "windowLock"/> Windows:
+				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "15" width = "15" id = "windowLock"/> Windows:
 				<span class = "tooltip">
-					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "25" width = "25">
+					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "15" width = "15">
 					<span class = "tooltiptext"> Opening the windows will increase indoor air speed by .5 meters/second and reduce total energy usage by 8%</span>
 				</span><br>
 				<input type = "radio" id = "windowSelection1" name = "windowSelection" class = "radio" value = "Closed" checked = "checked" style = "margin-left: 10px;" onclick = "run(); updateData();" />
 				<label for = "windowSelection1"> Closed </label>
-				<input type = "radio" id = "windowSelection2" name = "windowSelection" class = "radio" value = "Open" style = "margin-left: 52px;" onclick = "run(); updateData();"/>
+				<input type = "radio" id = "windowSelection2" name = "windowSelection" class = "radio" value = "Open" style = "margin-left: 57px;" onclick = "run(); updateData();"/>
 				<label for = "windowSelection2"> Open </label>
 				<br>
 				<br>
 
-				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "25" width = "25" id = "ceilingLock"/> Ceiling Fans:
+				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "15" width = "15" id = "ceilingLock"/> Ceiling Fans:
 				<span class = "tooltip">
-					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "25" width = "25">
+					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "15" width = "15">
 					<span class = "tooltiptext"> Turning on ceiling fans will increase indoor air speed by 1 meter/second and reduce total energy usage by 12% </span>
 				</span><br>
 				<input type = "radio" id = "ceilingSelection1" name = "ceilingSelection" class = "radio" value = "Off" checked = "checked" style = "margin-left: 10px;" onclick = "run(); updateData();" />
 				<label for = "ceilingSelection1"> Off </label>
-				<input type = "radio" id = "ceilingSelection2" name = "ceilingSelection" class = "radio" value = "On" style = "margin-left: 83px;" onclick = "run(); updateData();" />
+				<input type = "radio" id = "ceilingSelection2" name = "ceilingSelection" class = "radio" value = "On" style = "margin-left: 74px;" onclick = "run(); updateData();" />
 				<label for = "ceilingSelection2"> On </label>
 				<br>
 				<br>
 
-				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "25" width = "25" id = "roofLock"/> Cool Roofs:
+				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "15" width = "15" id = "roofLock"/> Cool Roofs:
 				<span class = "tooltip">
-					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "25" width = "25">
+					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "15" width = "15">
 					<span class = "tooltiptext"> Cool roofs deliver high solar relectance which reduce the amount of heat absorbed into the space from the sun. Installing cool roofs to building will reduce indoor air temperature by 3°F and reduce total energy usage by 6% </span>
 				</span><br>
 				<input type = "radio" id = "roofSelection1" name = "roofSelection" class = "radio" value = "No" checked = "checked" style = "margin-left: 10px;" onclick = "run(); updateData();" />
 				<label for = "roofSelection1"> No </label>
-				<input type = "radio" id = "roofSelection2" name = "roofSelection" class = "radio" value = "Yes" style = "margin-left: 85px;" onclick = "run(); updateData();" />
+				<input type = "radio" id = "roofSelection2" name = "roofSelection" class = "radio" value = "Yes" style = "margin-left: 75px;" onclick = "run(); updateData();" />
 				<label for = "roofSelection2"> Yes </label>
 				<br>
 				<br>
 
-				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "25" width = "25" id = "acLock"/> Passive Conditioning:
+				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "15" width = "15" id = "acLock"/> Passive Conditioning:
 				<span class = "tooltip">
-					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "25" width = "25">
+					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "15" width = "15">
 					<span class = "tooltiptext"> "Yes" turns the A/C system completely off and "No" turns the A/C system on all of the time </span>
 				</span><br>
 				<input type = "radio" id = "acSelection1" name = "acSelection" class = "radio" value = "No" checked = "checked" style = "margin-left: 10px;" onclick = "sliderPermission(); run(); updateData();" />
 				<label for = "acSelection1"> No </label>
-				<input type = "radio" id = "acSelection2" name = "acSelection" class = "radio" value = "Yes" style = "margin-left: 85px;" onclick = "sliderPermission(); run(); updateData();" />
+				<input type = "radio" id = "acSelection2" name = "acSelection" class = "radio" value = "Yes" style = "margin-left: 75px;" onclick = "sliderPermission(); run(); updateData();" />
 				<label for = "acSelection2"> Yes </label>
 				<br>
 				<br>
 
-				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "25" width = "25" id = "setpointLock"/> Dynamic Set Points:
+				<img src = "http://www.freeiconspng.com/uploads/lock-icon-17.png" height = "15" width = "15" id = "setpointLock"/> Dynamic Set Points:
 				<span class = "tooltip">
-					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "25" width = "25">
+					<img src = "https://static1.squarespace.com/static/53c7eface4b036a05b5120b7/t/54dab59de4b09b0ec42be9d4/1423619487270/" height = "15" width = "15">
 					<span class = "tooltiptext"> Change the setpoint Air Temperure of the thermostat in the space </span>
 				</span><br>
-				<input style = "width: 400px; margin-left: 5px;" type = "range" id = "setpointSlider" min = "-4" max = "4" step = "1" value = "0" onchange = "sliderValue(this.value); run(); updateData();" />
-				<span id = "sliderValue" style = "font-size: 25px; margin-left: 10px; "> 0 </span>
+				<input style = "width: 250px; margin-left: 5px;" type = "range" id = "setpointSlider" min = "-4" max = "4" step = "1" value = "0" onchange = "sliderValue(this.value); run(); updateData();" />
+				<span id = "sliderValue" style = "font-size: 20px; margin-left: 10px; "> 0 </span>
 				<br>
 				<br>
 
@@ -197,7 +199,7 @@
 
 
 		<div id = "pmvVisualization">
-			<div style = "width: 1100px;">
+			<div style = "width: 500px;">
 				<p class = "columnHeader"> Analysis </p>
 			</div>
 		</div>
@@ -211,7 +213,7 @@
 		</div>
 			<div style = "text-align: center; cursor: pointer;" onclick = "timeMatrix()">
 				<p class = "metricTableHeader"> Thermal Comfort Percentage of Time Matrix </p> 
-				<img src = "https://image.flaticon.com/icons/svg/24/24567.svg"  style = "height: 25px; width: 25px; display: inline-block;" id = "timeArrow"> </img>
+				<img src = "https://image.flaticon.com/icons/svg/24/24567.svg"  style = "height: 15px; width: 15px; display: inline-block;" id = "timeArrow"> </img>
 			</div>
 
 			<table id = "Thermal Quality Percentage Table" style = "margin-bottom: 40px; margin-left: 0px; display: none;">
@@ -260,7 +262,7 @@
 				</tr>
 
 				<tr>
-					<td class = "labelRow"> Comfortable<br> <span class = "labelFont"> (Between -.5 and .5 PMV) </span> </td>
+					<td class = "labelRow"> Comfortable <br> <span class = "labelFont"> (Between -.5 and .5 PMV) </span> <br> <span class = "labelFont"> % Comfortable/KWH </span> </td>
 					<td id = "comfDiff42"> N/A </td>
 					<td id = "baseComfEnergyPMV"> N/A </td>
 					<td id = "advComfEnergyPMV"> N/A </td>
@@ -322,8 +324,8 @@
 						 <p style = "text-align: left; font-size: 12px; margin-top: 0px;"> 42°F Base to <span class = "water"> &nbsp; </span> Base </p>
 					</p>
 
-					<p style = "font-size: 16px; text-align: center;"> Thermal Comfort: <span id = "summary1TC"> 0% </span> </p>
-					<p style = "font-size: 16px; text-align: center;"> Energy Usage / Cost: <span id = "summary1Energy"> 0% </span> </p>
+					<!-- <p style = "font-size: 16px; text-align: center;"> Thermal Comfort: <span id = "summary1TC"> 0% </span> </p> -->
+					<p style = "font-size: 10px; text-align: center;"> Energy Usage / Cost: <span id = "summary1Energy"> 0% </span> </p>
 				</div>
 
 				<div id = "placeHolder"> </div>
@@ -333,7 +335,7 @@
 						 <p style = "text-align: left; font-size: 12px; margin-top: 0px;"> <span class = "water"> &nbsp; </span> Base to <span class = "water"> &nbsp; </span> Advanced </p>
 					</p>
 
-					<p style = "font-size: 16px; text-align: center;"> Thermal Comfort: <span id = "summary2TC"> 0% </span> </p>
+					<p style = "font-size: 10px; text-align: center;"> Thermal Comfort: <span id = "summary2TC"> 0% </span> </p>
 				</div>
 
 				<div id = "summary3" style = "display: none;">
@@ -341,9 +343,9 @@
 						 <p style = "text-align: left; font-size: 12px; margin-top: 0px;"> <span class = "water"> &nbsp; </span> Base to <span class = "water"> &nbsp; </span> Advanced </p>
 					</p>
 
-					<p style = "font-size: 16px; text-align: center;"> Thermal Comfort: <span id = "summary3TC"> 0% </span> </p>
-					<p style = "font-size: 16px; text-align: center;"> Energy Usage / Cost: <span id = "summary3Energy"> 0% </span> </p>
-					<p style = "font-size: 16px; text-align: center;"> PMV / kWh: <span id = "summary3PMV"> 0% </span> </p>
+					<p style = "font-size: 10px; text-align: center;"> Thermal Comfort: <span id = "summary3TC"> 0% </span> </p>
+					<p style = "font-size: 10px; text-align: center;"> Energy Usage / Cost: <span id = "summary3Energy"> 0% </span> </p>
+					<p style = "font-size: 10px; text-align: center;"> PMV / kWh: <span id = "summary3PMV"> 0% </span> </p>
 				</div>
 
 
@@ -417,6 +419,8 @@
 
 			</p>
 		</div>
+
+		<a href = "https://s3-us-west-2.amazonaws.com/rh1-datasets/Building+23+Full+Dataset.csv"; style = "font-size: 10px; text-decoration: none; background-color: transparent;"> Click to Download Raw Data </a> 
 
 
 <script src="https://d3js.org/d3.v4.min.js"></script>

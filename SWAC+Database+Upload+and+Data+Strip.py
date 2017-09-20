@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[445]:
+# In[313]:
 
 import os
 import math
@@ -271,7 +271,7 @@ db.set_index("HI Date and Time", inplace = True)
 
 # #### Weather Underground API Call
 
-# In[327]:
+# In[51]:
 
 from datetime import date, timedelta
 key = "0bfa64942618d5ec"
@@ -337,6 +337,38 @@ def weatherData(start, end):
                 weatherRainRate.append(data[x]["history"]["observations"][y]["precip_ratei"])
             except:
                 break
+    
+    
+    weatherData = pd.DataFrame(
+        data = [weatherYear, weatherMonth, weatherDay, weatherHour, weatherMinute, weatherTemp, weatherHum, weatherRainRate]
+    ).T
+    
+
+
+    weatherData.columns = ["Year","Month", "Day", "Hour", "Minute", "Temp", "RH%", "Rain Rate"]
+    
+
+#     weatherData["Year"] = weatherData["Year"].apply(lambda x: int(x))
+    # To match up with mock data
+    weatherData["Year"] = 2013
+    weatherData["Month"] = weatherData["Month"].apply(lambda x: int(x))
+    weatherData["Day"] = weatherData["Day"].apply(lambda x: int(x))
+    weatherData["Hour"] = weatherData["Hour"].apply(lambda x: int(x))
+    weatherData["Minute"] = weatherData["Minute"].apply(lambda x: int(x))
+    weatherData["Temp"] = weatherData["Temp"].apply(lambda x: float(x))
+    weatherData["RH%"] = weatherData["RH%"].apply(lambda x: int(x))
+    weatherData["Rain Rate"] = weatherData["Rain Rate"].apply(lambda x: float(x))
+    
+
+    weatherData["Date/Time"] = pd.to_datetime(weatherData[["Year", "Month", "Day", "Hour", "Minute"]])
+
+    weatherData.set_index("Date/Time", inplace = True)
+    
+    weatherData = pd.DataFrame(weatherData)
+    
+#     print(weatherData)
+    
+    return(weatherData)
 
 
 # In[71]:
@@ -596,110 +628,33 @@ solar.plot()
 solar = pd.DataFrame(solar)
 
 
-# In[321]:
+# In[315]:
+
+db = db.join(solar, how = 'left')
+db.dropna(inplace = True)
+
+db[db["Location"] == "B23-LC"]["Solar Rad"].iplot()
+
+
+# In[311]:
 
 print(db["Solar Rad"].describe())
 
-# plt.figure(figsize = (20,12))
-# sns.distplot(db["Solar Rad"], bins = 50)
+plt.figure(figsize = (20,12))
+sns.distplot(db["Solar Rad"], bins = 50)
 
 
-# #### Solar Radiation From Weather Underground API
+# In[314]:
 
-# In[403]:
+cursor.execute("DROP TABLE mock_swac;")
+cursor.execute("CREATE TABLE mock_swac (Date_Time timestamp, Building int, Location varchar(25), Sqft_Percent varchar(25), Water_Temperature int, Air_Temperature varchar(25), Relative_Humidity varchar(25), kWh varchar(25), Energy_Cost varchar(25), Base_MRT varchar(25), Base_Air_Speed varchar(25), Base_Metabolic varchar(25), Base_Clo varchar(25), Advanced_MRT varchar(25), Advanced_Air_Speed varchar(25), Advanced_Metabolic varchar(25), Advanced_Clo varchar(25), Outdoor_Temp varchar(25), Outdoor_RH varchar(25), Solar_Rad varchar(25))")
+conn.commit()
 
-from datetime import date, timedelta
-key = "0bfa64942618d5ec"
-site = "IGUAM5"
-    
-#enter start and end dates in date(Year, Month, Day) format, make sure key and site variables are set
-def weatherData(start, end):
-    dateRange = []
-    date1 = start
-    date2 = end
+os.chdir("/Users/adeniyiharrison/Desktop/723 NAVFAC SWAC")
+db.reset_index().to_csv("SWAC Database.csv", header = False, index = False)
+db.to_excel("SWAC Database Clean.xlsx")
+csv = open("SWAC Database.csv", "r")
 
-    delta = date2 - date1
-
-    for x in range(delta.days + 1):
-        dateRange.append((date1 + timedelta(days = x)).strftime("%Y%m%d"))
-                
-    data = {}
-    
-    for date in dateRange:
-#         print(date)
-        urlstart = "http://api.wunderground.com/api/" + str(key) + "/history_"
-        urlend = "/q/pws:" + str(site) + ".json"
-
-        url = urlstart + date + urlend
-
-        data[date] = requests.get(url).json()
-        
-        weatherPretty = []
-        weatherYear = []
-        weatherMonth = []
-        weatherDay = []
-        weatherHour = []
-        weatherMinute = []
-        weatherSolar = []
-
-        for x in dateRange:
-            for y in range(400):
-                try:
-                    weatherPretty.append(data[x]["history"]["observations"][y]["date"]["pretty"])
-                    weatherYear.append(data[x]["history"]["observations"][y]["date"]["year"])
-                    weatherMonth.append(data[x]["history"]["observations"][y]["date"]["mon"])
-                    weatherDay.append(data[x]["history"]["observations"][y]["date"]["mday"])
-                    weatherHour.append(data[x]["history"]["observations"][y]["date"]["hour"])
-                    weatherMinute.append(data[x]["history"]["observations"][y]["date"]["min"])
-                    weatherSolar.append(data[date]["history"]["observations"][y]["solarradiation"])
-                except:
-                    pass
-        
-    holder = pd.DataFrame(data = [weatherPretty, weatherYear, weatherMonth, weatherDay, 
-                                weatherHour, weatherMinute, weatherSolar]).T
-
-    holder.columns = ["Date/Time", "Year", "Month", "Day", "Hour", "Minute", "Solar Rad"]
-
-    return(holder)
-
-
-# In[437]:
-
-solarWU = weatherData(date(2016,7,1), date(2016,7,30))
-solarWU.dropna(inplace = True)
-solarWU["Date/Time"] = solarWU["Date/Time"].apply(lambda x: x.replace("ChST on ", ""))
-
-date = []
-for y, M, d, h, m in zip(solarWU["Year"], solarWU["Month"], solarWU["Day"], solarWU["Hour"], solarWU["Minute"]):
-    holder = str(M) + "/" + str(d) + "/" + str(2013) + " " + str(h) + ":" + str(m)
-    date.append(datetime.datetime.strptime(holder, "%m/%d/%Y %H:%M"))
-
-solarWU["Date/Time"] = date
-
-solarWU.set_index("Date/Time", inplace = True)
-solarWU["Solar Rad"] = solarWU["Solar Rad"].apply(lambda x: float(x))
-solarWU.sort_index(ascending = True, inplace = True)
-solarWU = pd.DataFrame(solarWU.groupby(pd.TimeGrouper(freq = "5 Min"))["Solar Rad"].mean().fillna( method = 'ffill'))
-
-db = db.drop("Solar Rad", axis = 1).join(solarWU)
-
-
-# In[463]:
-
-db["2013-07-26" : "2013-07-30"]["Solar Rad"].iplot()
-
-
-# In[465]:
-
-# cursor.execute("DROP TABLE mock_swac;")
-# cursor.execute("CREATE TABLE mock_swac (Date_Time timestamp, Building int, Location varchar(25), Sqft_Percent varchar(25), Water_Temperature int, Air_Temperature varchar(25), Relative_Humidity varchar(25), kWh varchar(25), Energy_Cost varchar(25), Base_MRT varchar(25), Base_Air_Speed varchar(25), Base_Metabolic varchar(25), Base_Clo varchar(25), Advanced_MRT varchar(25), Advanced_Air_Speed varchar(25), Advanced_Metabolic varchar(25), Advanced_Clo varchar(25), Outdoor_Temp varchar(25), Outdoor_RH varchar(25), Solar_Rad varchar(25))")
-# conn.commit()
-
-# os.chdir("/Users/adeniyiharrison/Desktop/723 NAVFAC SWAC")
-# db.reset_index().to_csv("SWAC Database.csv", header = False, index = False)
-# db.to_excel("SWAC Database Clean.xlsx")
-# csv = open("SWAC Database.csv", "r")
-
-# cursor.copy_from(csv, 'mock_swac', sep=',')
-# conn.commit()
+cursor.copy_from(csv, 'mock_swac', sep=',')
+conn.commit()
 

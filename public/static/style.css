@@ -2,17 +2,18 @@ body {
     font-family: "Lucida Sans Unicode" ;
     color: #525252;
     background-color: white;
+    font-size: 10px;
 }
 
 #holder {
 	display:inline block;
 	overflow:auto;
 	text-align: center;
-	height: 1700px;
+	height: 1400px;
 }
 
 #variableSelection {
-	width: 500px;
+	width: 325px;
 	line-height: 190%;
 	display: inline-block;
 	text-align: left;
@@ -30,7 +31,7 @@ h1 {
 
 .columnHeader {
 	text-align: center;
-	font-size: 30px;
+	font-size: 15px;
 }
 
 .dropDown {
@@ -39,15 +40,15 @@ h1 {
 }
 
 .arrowImage {
-	height: 25px; 
-	width: 25px; 
+	height: 15px; 
+	width: 15px; 
 	display: inline-block
 }
 
 .variableHeader{
 	border-radius: 8px; 
 	background-color: #384c6b;
-	width: 450px;
+	/*width: 250px;*/
 	margin:0 auto;
 }
 
@@ -57,13 +58,13 @@ h1 {
 }
 
 #pmvVisualization {
-	width: 1100px;
-	height: 1400px;
+	width: 500px;
+	height: 700px;
 	border-color: #d3d3d3;
 	border-width: 1px;
 	display: inline-block;
 	vertical-align:top;
-	margin-left: 25px;
+	/*margin-left: 25px;*/
 }
 
 #header {
@@ -78,8 +79,7 @@ h1 {
 	display: inline-block;
 	vertical-align:top;
 	float: top;
-	height: 1500px;
-	width: 750px;
+	width: 400px;
 	margin-left: 25px;
 }
 
@@ -90,7 +90,7 @@ h1 {
 }
 
 .metricTableHeader {
-	font-size: 22px;
+	font-size: 12px;
 	font-weight: 800;
 	display: inline-block;
 	vertical-align: 25%;
@@ -99,7 +99,7 @@ h1 {
 .summaryHeader {
 	text-align: left; 
 	margin-bottom: 0px;
-	font-size: 19px;
+	font-size: 12px;
 	font-weight: 800;	
 }
 
@@ -108,7 +108,7 @@ table, th, td {
     border-style: none;
     border-color: #d3d3d3;
     border-collapse: collapse;
-    width: 750px;
+    width: 400px;
     text-align: center;
 }
 
@@ -124,11 +124,12 @@ tr:nth-child(even) {
 .labelRow{
 	border-style: none;
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 12px;
 }
 
 .labelFont {
-	font-size: 13px;
+	font-size: 8px;
+	font-weight: bold;
 }
 
 h3 {
@@ -169,7 +170,7 @@ path {
 }
 
 g#xAxis text {
-    font-size: 12px;
+    font-size: 9px;
     font-family: "Lucida Sans Unicode";
 }
 
@@ -180,7 +181,7 @@ g#xAxis text {
 }
 
 g#yAxis text {
-    font-size: 12px;
+    font-size: 9px;
     font-family: "Lucida Sans Unicode";
 }
 
